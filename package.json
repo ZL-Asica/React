@@ -74,7 +74,7 @@
     "@zl-asica/prettier-config": "latest",
     "esbuild-plugin-preserve-directives": "^0.0.11",
     "eslint": "^9.15.0",
-    "eslint-config-zl-asica": "1.0.18",
+    "eslint-config-zl-asica": "1.0.19",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.10",
