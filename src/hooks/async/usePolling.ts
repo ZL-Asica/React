@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 
 /**
  * usePolling
@@ -27,27 +27,27 @@ import { useEffect, useRef } from 'react';
  */
 export const usePolling = (
   callback: () => void,
-  delay: number | null
+  delay: number | null,
 ): void => {
-  const savedCallback = useRef<() => void>(callback);
+  const savedCallback = useRef<() => void>(callback)
 
   // Update the saved callback whenever it changes
   useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
+    savedCallback.current = callback
+  }, [callback])
 
   useEffect(() => {
     // Stop polling if delay is null
     if (delay === null) {
-      return;
+      return
     }
 
     // Create the interval
     const id = setInterval(() => {
-      savedCallback.current();
-    }, delay);
+      savedCallback.current()
+    }, delay)
 
     // Clear the interval on cleanup
-    return () => clearInterval(id);
-  }, [delay]);
-};
+    return () => clearInterval(id)
+  }, [delay])
+}

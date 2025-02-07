@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import type { MouseEvent as ReactMouseEvent } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react'
 /**
  * Retrieves the current scroll position of the window.
  *
@@ -15,21 +15,21 @@ import type { MouseEvent as ReactMouseEvent } from 'react';
  * console.log(`Scroll X: ${x}, Scroll Y: ${y}`);
  * ```
  */
-export const getScrollPosition = (): { x: number; y: number } => {
-  const scrollX =
-    window.scrollX ??
-    document.documentElement?.scrollLeft ??
-    document.body?.scrollLeft ??
-    0;
+export const getScrollPosition = (): { x: number, y: number } => {
+  const scrollX
+    = window.scrollX
+      ?? document.documentElement?.scrollLeft
+      ?? document.body?.scrollLeft
+      ?? 0
 
-  const scrollY =
-    window.scrollY ??
-    document.documentElement?.scrollTop ??
-    document.body?.scrollTop ??
-    0;
+  const scrollY
+    = window.scrollY
+      ?? document.documentElement?.scrollTop
+      ?? document.body?.scrollTop
+      ?? 0
 
-  return { x: scrollX, y: scrollY };
-};
+  return { x: scrollX, y: scrollY }
+}
 
 /**
  * Copies the given text to the clipboard.
@@ -65,21 +65,22 @@ export const getScrollPosition = (): { x: number; y: number } => {
 export const copyToClipboard = async (
   text: string,
   callback?: () => void,
-  timeout?: number
+  timeout?: number,
 ): Promise<boolean> => {
   try {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(text)
     if (callback && typeof callback === 'function') {
-      callback();
-      if (timeout) {
-        setTimeout(callback, timeout);
+      callback()
+      if (timeout !== undefined && timeout > 0) {
+        setTimeout(callback, timeout)
       }
     }
-    return true;
-  } catch {
-    return false;
+    return true
   }
-};
+  catch {
+    return false
+  }
+}
 
 /**
  * Retrieves text from the clipboard.
@@ -97,11 +98,12 @@ export const copyToClipboard = async (
  */
 export const pasteFromClipboard = async (): Promise<string> => {
   try {
-    return await navigator.clipboard.readText();
-  } catch {
-    return '';
+    return await navigator.clipboard.readText()
   }
-};
+  catch {
+    return ''
+  }
+}
 
 /**
  * Scrolls to the top of the page or a specified vertical position.
@@ -111,8 +113,8 @@ export const pasteFromClipboard = async (): Promise<string> => {
  *
  * Optionally, a callback can be provided to execute logic after scrolling.
  *
- * @param {number} [top=0] - The vertical scroll position to scroll to (default is `0`).
- * @param {'auto' | 'smooth'} [behavior='smooth'] - The scroll behavior (default is `'smooth'`).
+ * @param {number} [top] - The vertical scroll position to scroll to (default is `0`).
+ * @param {'auto' | 'smooth'} [behavior] - The scroll behavior (default is `'smooth'`).
  * @param {() => void} [callback] - Optional callback function to execute after scrolling.
  *
  * @example
@@ -132,35 +134,37 @@ export const pasteFromClipboard = async (): Promise<string> => {
 export const backToTop = (
   top: number = 0,
   behavior: 'auto' | 'smooth' = 'smooth',
-  callback?: () => void
+  callback?: () => void,
 ): ((event?: ReactMouseEvent) => void) => {
   return (event?: ReactMouseEvent) => {
     // Prevent default action if used in an event handler
     if (event) {
-      event.preventDefault();
+      event.preventDefault()
     }
 
     // Scroll to the specified position
     window.scrollTo({
       top,
       behavior,
-    });
+    })
 
     // Optionally execute the callback
     if (callback) {
       // If behavior is smooth, wait for the scroll to finish
       if (behavior === 'smooth') {
-        const checkIfAtPosition = () => {
+        const checkIfAtPosition = (): void => {
           if (Math.abs(window.scrollY - top) < 1) {
-            callback();
-          } else {
-            requestAnimationFrame(checkIfAtPosition);
+            callback()
           }
-        };
-        requestAnimationFrame(checkIfAtPosition);
-      } else {
-        callback();
+          else {
+            requestAnimationFrame(checkIfAtPosition)
+          }
+        }
+        requestAnimationFrame(checkIfAtPosition)
+      }
+      else {
+        callback()
       }
     }
-  };
-};
+  }
+}

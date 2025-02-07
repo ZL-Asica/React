@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react'
 
 /**
  * useDebouncedCallback
@@ -10,7 +10,7 @@ import { useCallback, useEffect, useRef } from 'react';
  *
  * @template TArguments - The argument types for the callback function.
  * @param {(args: TArguments) => void} callback - The original callback function to debounce.
- * @param {number} [delay=200] - The debounce delay in milliseconds. Defaults to 200ms.
+ * @param {number} [delay] - The debounce delay in milliseconds. Defaults to 200ms.
  * @returns {(args: TArguments) => void} A debounced version of the callback function.
  *
  * @example
@@ -40,39 +40,39 @@ import { useCallback, useEffect, useRef } from 'react';
  */
 export const useDebouncedCallback = <TArguments extends unknown[]>(
   callback: (...arguments_: TArguments) => void,
-  delay: number = 200
+  delay: number = 200,
 ): ((...arguments_: TArguments) => void) => {
-  const callbackReference = useRef(callback);
-  const timeoutReference = useRef<NodeJS.Timeout | null>(null);
+  const callbackReference = useRef(callback)
+  const timeoutReference = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     // Always update the ref to the latest callback
-    callbackReference.current = callback;
-  }, [callback]);
+    callbackReference.current = callback
+  }, [callback])
 
   const debouncedCallback = useCallback(
     (...arguments_: TArguments) => {
       // Clear the existing timeout
       if (timeoutReference.current) {
-        clearTimeout(timeoutReference.current);
+        clearTimeout(timeoutReference.current)
       }
 
       // Set a new timeout
       timeoutReference.current = setTimeout(() => {
-        callbackReference.current(...arguments_);
-      }, delay);
+        callbackReference.current(...arguments_)
+      }, delay)
     },
-    [delay]
-  );
+    [delay],
+  )
 
   useEffect(() => {
     // Cleanup timeout on unmount
     return () => {
       if (timeoutReference.current) {
-        clearTimeout(timeoutReference.current);
+        clearTimeout(timeoutReference.current)
       }
-    };
-  }, []);
+    }
+  }, [])
 
-  return debouncedCallback;
-};
+  return debouncedCallback
+}

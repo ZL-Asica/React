@@ -18,3 +18,5 @@ docs/.vitepress/dist
 docs/.vitepress/cache
 docs/docs/
 coverage/
+.vitepress/cache
+.vitepress/dist

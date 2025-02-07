@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
 /**
  * useSessionStorage
@@ -41,51 +41,59 @@ import { useState } from 'react';
  */
 export const useSessionStorage = <T>(
   key: string,
-  initialValue: T
+  initialValue: T,
 ): {
-  value: T;
-  setValue: (value: T | ((currentValue: T) => T)) => void;
-  error: Error | null;
+  value: T
+  setValue: (value: T | ((currentValue: T) => T)) => void
+  error: Error | null
 } => {
   const getStoredValue = (key: string, defaultValue: T): [T, Error | null] => {
     try {
-      const storedValue = globalThis.sessionStorage.getItem(key);
-      return storedValue
-        ? [JSON.parse(storedValue) as T, null]
-        : [defaultValue, null];
-    } catch (error) {
+      const storedValue = globalThis.sessionStorage.getItem(key)
+      if (storedValue === null || storedValue === undefined) {
+        return [defaultValue, null]
+      }
+      try {
+        return [JSON.parse(storedValue) as T, null]
+      }
+      catch (error) {
+        return [defaultValue, error instanceof Error ? error : new Error('Unknown error')]
+      }
+    }
+    catch (error) {
       return [
         defaultValue,
         error instanceof Error ? error : new Error('Unknown error'),
-      ];
+      ]
     }
-  };
+  }
 
   const [storedValue, setStoredValue] = useState<T>(() => {
-    const [value] = getStoredValue(key, initialValue);
-    return value;
-  });
+    const [value] = getStoredValue(key, initialValue)
+    return value
+  })
 
   const [error, setError] = useState<Error | null>(() => {
-    const [, initialError] = getStoredValue(key, initialValue);
-    return initialError;
-  });
+    const [, initialError] = getStoredValue(key, initialValue)
+    return initialError
+  })
 
-  const setValue = (newValue: T | ((currentValue: T) => T)) => {
+  const setValue = (newValue: T | ((currentValue: T) => T)): void => {
     try {
-      const valueToStore =
-        typeof newValue === 'function'
+      const valueToStore
+        = typeof newValue === 'function'
           ? (newValue as (currentValue: T) => T)(storedValue)
-          : newValue;
+          : newValue
 
       // Only update sessionStorage and state if storage succeeds
-      globalThis.sessionStorage.setItem(key, JSON.stringify(valueToStore));
-      setStoredValue(valueToStore);
-      setError(null); // Clear any previous errors
-    } catch (error) {
-      setError(error instanceof Error ? error : new Error('Unknown error'));
+      globalThis.sessionStorage.setItem(key, JSON.stringify(valueToStore))
+      setStoredValue(valueToStore)
+      setError(null) // Clear any previous errors
     }
-  };
+    catch (error) {
+      setError(error instanceof Error ? error : new Error('Unknown error'))
+    }
+  }
 
-  return { value: storedValue, setValue, error };
-};
+  return { value: storedValue, setValue, error }
+}

@@ -1,8 +1,8 @@
 // **
 // * @description
 // * This file is the entry point for all async hooks.
-//**
+//* *
 
-export { useFetch } from './useFetch';
-export { useAsync } from './useAsync';
-export { usePolling } from './usePolling';
+export { useAsync } from './useAsync'
+export { useFetch } from './useFetch'
+export { usePolling } from './usePolling'

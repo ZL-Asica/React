@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react'
 
 /**
  * useDebounce
@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
  * search input handling or API calls.
  *
  * @param {T} value - The value to debounce. Can be any type (e.g., primitive, object, array, function).
- * @param {number} [delay=200] - The debounce delay in milliseconds. Defaults to 200ms.
+ * @param {number} [delay] - The debounce delay in milliseconds. Defaults to 200ms.
  * @returns {T} The debounced value, which updates after the specified delay.
  *
  * @example
@@ -64,17 +64,17 @@ import { useState, useEffect } from 'react';
  * ```
  */
 export const useDebounce = <T>(value: T, delay: number = 200): T => {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+      setDebouncedValue(value)
+    }, delay)
 
     return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+      clearTimeout(handler)
+    }
+  }, [value, delay])
 
-  return debouncedValue;
-};
+  return debouncedValue
+}

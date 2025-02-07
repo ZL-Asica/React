@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react'
 
 /**
  * useAsync
@@ -9,7 +9,7 @@ import { useState, useCallback, useEffect } from 'react';
  * @template T - The type of the result returned by the asynchronous function.
  * @template E - The type of the error (defaults to `Error`).
  * @param {() => Promise<T>} asyncFunction - The asynchronous function to execute.
- * @param {boolean} [immediate=true] - Whether to execute the function immediately upon hook initialization.
+ * @param {boolean} [immediate] - Whether to execute the function immediately upon hook initialization.
  * @returns {{
  *   execute: () => Promise<void>;
  *   loading: boolean;
@@ -43,36 +43,41 @@ import { useState, useCallback, useEffect } from 'react';
  */
 export const useAsync = <T, E = Error>(
   asyncFunction: () => Promise<T>,
-  immediate: boolean = true
+  immediate: boolean = true,
 ): {
-  execute: () => Promise<void>;
-  loading: boolean;
-  error: E | null;
-  result: T | null;
+  execute: () => Promise<void>
+  loading: boolean
+  error: E | null
+  result: T | null
 } => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<E | null>(null);
-  const [result, setResult] = useState<T | null>(null);
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<E | null>(null)
+  const [result, setResult] = useState<T | null>(null)
 
   const execute = useCallback(async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
 
     try {
-      const data = await asyncFunction();
-      setResult(data);
-    } catch (error_) {
-      setError(error_ as E);
-    } finally {
-      setLoading(false);
+      const data = await asyncFunction()
+      setResult(data)
     }
-  }, [asyncFunction]);
+    catch (error_) {
+      setError(error_ as E)
+    }
+    finally {
+      setLoading(false)
+    }
+  }, [asyncFunction])
 
   useEffect(() => {
     if (immediate) {
-      execute();
+      execute().catch((error_) => {
+        setError(error_ as E)
+        setLoading(false)
+      })
     }
-  }, [immediate, execute]);
+  }, [immediate, execute])
 
-  return { execute, loading, error, result };
-};
+  return { execute, loading, error, result }
+}

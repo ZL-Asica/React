@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useKeyPress
@@ -11,7 +11,7 @@ import { useEventListener } from './useEventListener';
  * The key detection is case-sensitive and supports optional debouncing for optimized performance during rapid key presses.
  *
  * @param {string} targetKey - The key to detect (e.g., 'Enter', 'Escape', 'a'). The key is case-sensitive.
- * @param {number} [debounce=0] - The debounce delay in milliseconds for the event listener. Defaults to `0` (no debounce).
+ * @param {number} [debounce] - The debounce delay in milliseconds for the event listener. Defaults to `0` (no debounce).
  * @returns {boolean} `true` if the target key is currently pressed, `false` otherwise.
  *
  * @example
@@ -48,26 +48,26 @@ import { useEventListener } from './useEventListener';
  */
 export const useKeyPress = (
   targetKey: string,
-  debounce: number = 0
+  debounce: number = 0,
 ): boolean => {
-  const [keyPressed, setKeyPressed] = useState(false);
+  const [keyPressed, setKeyPressed] = useState(false)
 
-  const downHandler = (event: Event) => {
-    const keyboardEvent = event as KeyboardEvent;
+  const downHandler = (event: Event): void => {
+    const keyboardEvent = event as KeyboardEvent
     if (keyboardEvent.key === targetKey) {
-      setKeyPressed(true);
+      setKeyPressed(true)
     }
-  };
+  }
 
-  const upHandler = (event: Event) => {
-    const keyboardEvent = event as KeyboardEvent;
+  const upHandler = (event: Event): void => {
+    const keyboardEvent = event as KeyboardEvent
     if (keyboardEvent.key === targetKey) {
-      setKeyPressed(false);
+      setKeyPressed(false)
     }
-  };
+  }
 
-  useEventListener('keydown', downHandler, undefined, undefined, debounce);
-  useEventListener('keyup', upHandler, undefined, undefined, debounce);
+  useEventListener('keydown', downHandler, undefined, undefined, debounce)
+  useEventListener('keyup', upHandler, undefined, undefined, debounce)
 
-  return keyPressed;
-};
+  return keyPressed
+}

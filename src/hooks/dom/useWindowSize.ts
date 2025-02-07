@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useWindowSize
@@ -48,18 +48,18 @@ import { useEventListener } from './useEventListener';
  */
 
 export const useWindowSize = (
-  debounce: number = 0
-): { width: number; height: number } => {
+  debounce: number = 0,
+): { width: number, height: number } => {
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-  });
+  })
 
-  const handleResize = () => {
-    setSize({ width: window.innerWidth, height: window.innerHeight });
-  };
+  const handleResize = (): void => {
+    setSize({ width: window.innerWidth, height: window.innerHeight })
+  }
 
-  useEventListener('resize', handleResize, undefined, undefined, debounce);
+  useEventListener('resize', handleResize, undefined, undefined, debounce)
 
-  return size;
-};
+  return size
+}

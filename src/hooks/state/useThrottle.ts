@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react'
 
 /**
  * useThrottle
@@ -28,23 +28,23 @@ import { useCallback, useRef } from 'react';
  */
 export const useThrottle = <TArguments extends unknown[]>(
   callback: (...arguments_: TArguments) => void,
-  delay: number
+  delay: number,
 ): ((...arguments_: TArguments) => void) => {
-  const lastExecutedReference = useRef<number | null>(null);
+  const lastExecutedReference = useRef<number | null>(null)
 
   const throttledCallback = useCallback(
     (...arguments_: TArguments) => {
-      const now = Date.now();
+      const now = Date.now()
       if (
-        lastExecutedReference.current === null ||
-        now - lastExecutedReference.current >= delay
+        lastExecutedReference.current === null
+        || now - lastExecutedReference.current >= delay
       ) {
-        callback(...arguments_);
-        lastExecutedReference.current = now;
+        callback(...arguments_)
+        lastExecutedReference.current = now
       }
     },
-    [callback, delay]
-  );
+    [callback, delay],
+  )
 
-  return throttledCallback;
-};
+  return throttledCallback
+}

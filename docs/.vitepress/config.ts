@@ -1,7 +1,7 @@
-import path from 'node:path';
+import path from 'node:path'
 
-import { defineConfig } from 'vitepress';
-import { withSidebar } from 'vitepress-sidebar';
+import { defineConfig } from 'vitepress'
+import { withSidebar } from 'vitepress-sidebar'
 
 // https://vitepress.dev/reference/site-config
 const vitePressConfig = {
@@ -88,7 +88,7 @@ const vitePressConfig = {
     },
   },
   ignoreDeadLinks: true,
-};
+}
 
 export default defineConfig(
   // @ts-expect-error: `withSidebar` is not part of the official VitePress config.
@@ -102,5 +102,5 @@ export default defineConfig(
       resolvePath: '/docs/',
       useFolderLinkFromIndexFile: true,
     },
-  ])
-);
+  ]),
+)

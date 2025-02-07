@@ -1,15 +1,19 @@
-import { zlAsicaTsReactConfig } from 'eslint-config-zl-asica';
+import antfu from '@antfu/eslint-config'
 
-export default [
-  ...zlAsicaTsReactConfig,
-  {
-    rules: {
-      'unicorn/filename-case': 'off',
-      'import/group-exports': 'off',
-      'unicorn/consistent-function-scoping': 'off',
-      'unicorn/prefer-global-this': 'off',
-      'unicorn/no-useless-undefined': 'off',
-      'unicorn/no-object-as-default-parameter': 'off',
-    },
+export default antfu({
+  type: 'lib',
+  formatters: true,
+  react: true,
+  typescript: {
+    tsconfigPath: 'tsconfig.json',
   },
-];
+  stylistic: {
+    semi: false,
+  },
+  lessOpinionated: true,
+}, {
+  files: ['fix-markdown.mjs', 'sync-version.mjs'],
+  rules: {
+    'no-console': 'off',
+  },
+})

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react'
 
 /**
  * useFetch
@@ -35,54 +35,59 @@ import { useState, useEffect } from 'react';
  * ```
  */
 export const useFetch = <T>(
-  url: string
+  url: string,
 ): {
-  data: T | null;
-  error: Error | null;
-  loading: boolean;
+  data: T | null
+  error: Error | null
+  loading: boolean
 } => {
-  const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<T | null>(null)
+  const [error, setError] = useState<Error | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    let isCancelled = false;
+    let isCancelled = false
 
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    const fetchData = async (): Promise<void> => {
+      setLoading(true)
+      setError(null)
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(url)
         if (!response.ok) {
-          throw new Error(response.statusText || 'Fetch failed');
+          throw new Error(response.statusText || 'Fetch failed')
         }
-        const result: T = await response.json();
+        const result: T = (await response.json()) as T
         if (!isCancelled) {
-          setData(result);
-        }
-      } catch (fetchError) {
-        if (!isCancelled) {
-          setError(
-            fetchError instanceof Error
-              ? fetchError
-              : new Error('Unknown error')
-          );
-          setData(null);
-        }
-      } finally {
-        if (!isCancelled) {
-          setLoading(false);
+          setData(result)
         }
       }
-    };
+      catch (fetchError) {
+        if (!isCancelled) {
+          setError(
+            fetchError instanceof Error ? fetchError : new Error('Unknown error'),
+          )
+          setData(null)
+        }
+      }
+      finally {
+        if (!isCancelled) {
+          setLoading(false)
+        }
+      }
+    }
 
-    fetchData();
+    fetchData().catch((error) => {
+      if (!isCancelled) {
+        setError(error instanceof Error ? error : new Error('Unknown error'))
+        setLoading(false)
+      }
+    })
 
     return () => {
-      isCancelled = true;
-    };
-  }, [url]);
+      isCancelled = true
+    }
+  }, [url])
 
-  return { data, error, loading };
-};
+  return { data, error, loading }
+}

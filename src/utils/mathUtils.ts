@@ -11,10 +11,14 @@
  * ```
  */
 export const randomInt = (min: number, max: number): number => {
-  if (Number.isNaN(min) || Number.isNaN(max)) return Number.NaN;
-  if (min > max) [min, max] = [max, min];
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+  if (Number.isNaN(min) || Number.isNaN(max)) {
+    return Number.NaN
+  }
+  if (min > max) {
+    [min, max] = [max, min]
+  }
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 /**
  * Generates a random floating-point number between `min` and `max`.
@@ -29,10 +33,14 @@ export const randomInt = (min: number, max: number): number => {
  * ```
  */
 export const randomFloat = (min: number, max: number): number => {
-  if (Number.isNaN(min) || Number.isNaN(max)) return Number.NaN;
-  if (min > max) [min, max] = [max, min];
-  return Math.random() * (max - min) + min;
-};
+  if (Number.isNaN(min) || Number.isNaN(max)) {
+    return Number.NaN
+  }
+  if (min > max) {
+    [min, max] = [max, min]
+  }
+  return Math.random() * (max - min) + min
+}
 
 /**
  * Clamps a number to a specified range.
@@ -49,11 +57,14 @@ export const randomFloat = (min: number, max: number): number => {
  * ```
  */
 export const clamp = (value: number, min: number, max: number): number => {
-  if (Number.isNaN(value) || Number.isNaN(min) || Number.isNaN(max))
-    return Number.NaN;
-  if (min > max) [min, max] = [max, min];
-  return Math.min(Math.max(value, min), max);
-};
+  if (Number.isNaN(value) || Number.isNaN(min) || Number.isNaN(max)) {
+    return Number.NaN
+  }
+  if (min > max) {
+    [min, max] = [max, min]
+  }
+  return Math.min(Math.max(value, min), max)
+}
 
 /**
  * Linearly interpolates between two numbers.
@@ -70,15 +81,16 @@ export const clamp = (value: number, min: number, max: number): number => {
  */
 export const lerp = (start: number, end: number, t: number): number => {
   if (
-    Number.isNaN(start) ||
-    Number.isNaN(end) ||
-    Number.isNaN(t) ||
-    t < 0 ||
-    t > 1
-  )
-    return Number.NaN;
-  return start + t * (end - start);
-};
+    Number.isNaN(start)
+    || Number.isNaN(end)
+    || Number.isNaN(t)
+    || t < 0
+    || t > 1
+  ) {
+    return Number.NaN
+  }
+  return start + t * (end - start)
+}
 
 /**
  * Maps a number from one range to another.
@@ -100,20 +112,21 @@ export const mapRange = (
   inMin: number,
   inMax: number,
   outMin: number,
-  outMax: number
+  outMax: number,
 ): number => {
   if (
-    Number.isNaN(value) ||
-    Number.isNaN(inMin) ||
-    Number.isNaN(inMax) ||
-    Number.isNaN(outMin) ||
-    Number.isNaN(outMax) ||
-    inMin === inMax
-  )
-    return Number.NaN;
+    Number.isNaN(value)
+    || Number.isNaN(inMin)
+    || Number.isNaN(inMax)
+    || Number.isNaN(outMin)
+    || Number.isNaN(outMax)
+    || inMin === inMax
+  ) {
+    return Number.NaN
+  }
 
-  const clampedValue = clamp(value, inMin, inMax);
+  const clampedValue = clamp(value, inMin, inMax)
   return (
     ((clampedValue - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
-  );
-};
+  )
+}

@@ -13,8 +13,8 @@
  * ```
  */
 export const deepClone = <T>(object: T): T => {
-  return structuredClone(object);
-};
+  return structuredClone(object)
+}
 
 /**
  * Determines whether a value is a non-array object.
@@ -30,10 +30,10 @@ export const deepClone = <T>(object: T): T => {
  * ```
  */
 export const isObject = (
-  value: unknown = null
+  value: unknown = null,
 ): value is Record<string, unknown> => {
-  return value !== null && typeof value === 'object' && !Array.isArray(value);
-};
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+}
 
 /**
  * Deeply merges two objects into a single object.
@@ -55,23 +55,24 @@ export const mergeObjects = <
   U extends Record<string, unknown>,
 >(
   object1: T,
-  object2: U
+  object2: U,
 ): T & U => {
-  const result = { ...object1 } as T & U;
+  const result = { ...object1 } as T & U
 
   for (const key in object2) {
     if (isObject(object2[key]) && isObject(object1[key])) {
       result[key as keyof U] = mergeObjects(
         object1[key as keyof T] as Record<string, unknown>,
-        object2[key as keyof U] as Record<string, unknown>
-      ) as unknown as (T & U)[keyof U];
-    } else {
-      result[key as keyof U] = object2[key as keyof U] as (T & U)[keyof U];
+        object2[key as keyof U] as Record<string, unknown>,
+      ) as unknown as (T & U)[keyof U]
+    }
+    else {
+      result[key as keyof U] = object2[key as keyof U] as (T & U)[keyof U]
     }
   }
 
-  return result;
-};
+  return result
+}
 
 /**
  * Picks specified keys from an object.
@@ -89,16 +90,16 @@ export const mergeObjects = <
  */
 export const pick = <T extends Record<string, unknown>>(
   object: T,
-  keys: Array<keyof T>
+  keys: Array<keyof T>,
 ): Partial<T> => {
-  const result = {} as Partial<T>;
+  const result = {} as Partial<T>
   for (const key of keys) {
     if (key in object) {
-      result[key] = object[key];
+      result[key] = object[key]
     }
   }
-  return result;
-};
+  return result
+}
 
 /**
  * Omits specified keys from an object.
@@ -116,14 +117,14 @@ export const pick = <T extends Record<string, unknown>>(
  */
 export const omit = <T extends Record<string, unknown>>(
   object: T,
-  keys: Array<keyof T>
+  keys: Array<keyof T>,
 ): Partial<T> => {
-  const result = { ...object };
+  const result = { ...object }
   for (const key of keys) {
-    delete result[key];
+    delete result[key]
   }
-  return result;
-};
+  return result
+}
 
 /**
  * Checks if a value is an empty object, array, string, or falsy value.
@@ -142,12 +143,15 @@ export const omit = <T extends Record<string, unknown>>(
  * ```
  */
 export const isEmpty = (value: unknown): boolean => {
-  if (value === null) return true; // Covers `null` and `undefined`
+  // Covers `null` and `undefined`
+  if (value === null) {
+    return true
+  }
   if (Array.isArray(value) || typeof value === 'string') {
-    return value.length === 0;
+    return value.length === 0
   }
   if (isObject(value)) {
-    return Object.keys(value).length === 0;
+    return Object.keys(value).length === 0
   }
-  return false; // Non-empty, non-object, and non-nullish types
-};
+  return false // Non-empty, non-object, and non-nullish types
+}

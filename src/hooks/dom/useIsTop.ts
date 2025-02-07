@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useIsTop
@@ -65,29 +65,29 @@ export const useIsTop = (
   offset: number = 0,
   element?: HTMLElement | null | undefined,
   debounce: number = 0,
-  initialValue: boolean = true
+  initialValue: boolean = true,
 ): boolean => {
-  const [isTop, setIsTop] = useState(initialValue);
+  const [isTop, setIsTop] = useState(initialValue)
 
-  const checkTop = () => {
-    const target = element ?? document.documentElement;
+  const checkTop = (): void => {
+    const target = element ?? document.documentElement
 
     // Handle cases where `scrollTop` may not exist
-    const scrollTop = target.scrollTop ?? 0;
+    const scrollTop = target.scrollTop ?? 0
 
     // Explicitly handle case where scrollTop is greater than the offset
-    const isAtTop = scrollTop <= offset;
-    setIsTop(isAtTop);
-  };
+    const isAtTop = scrollTop <= offset
+    setIsTop(isAtTop)
+  }
 
   // Attach scroll and resize listeners
   useEventListener(
     'scroll',
     checkTop,
-    { current: element ?? null },
+    { current: element ?? globalThis },
     undefined,
-    debounce
-  );
+    debounce,
+  )
 
-  return isTop;
-};
+  return isTop
+}

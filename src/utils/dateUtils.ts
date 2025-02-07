@@ -10,7 +10,7 @@
  * - `ss`: Two-digit seconds (e.g., 45).
  *
  * @param {Date} date - The `Date` object to format.
- * @param {string} [format='YYYY-MM-DD'] - The format string specifying the desired output format.
+ * @param {string} [format] - The format string specifying the desired output format.
  * @returns {string} A formatted date string. Returns an empty string if the input is invalid.
  *
  * @example
@@ -24,7 +24,7 @@
  */
 export const formatDate = (date: Date, format = 'YYYY-MM-DD'): string => {
   if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
-    return ''; // Return empty string for invalid dates
+    return '' // Return empty string for invalid dates
   }
 
   const map: Record<string, string> = {
@@ -34,10 +34,10 @@ export const formatDate = (date: Date, format = 'YYYY-MM-DD'): string => {
     HH: `${date.getHours()}`.padStart(2, '0'),
     mm: `${date.getMinutes()}`.padStart(2, '0'),
     ss: `${date.getSeconds()}`.padStart(2, '0'),
-  };
+  }
 
-  return format.replaceAll(/YYYY|MM|DD|HH|mm|ss/g, (matched) => map[matched]);
-};
+  return format.replaceAll(/YYYY|MM|DD|HH|mm|ss/g, matched => map[matched])
+}
 
 /**
  * Checks if two `Date` objects fall on the same calendar day.
@@ -61,20 +61,20 @@ export const formatDate = (date: Date, format = 'YYYY-MM-DD'): string => {
  */
 export const isSameDay = (date1: Date, date2: Date): boolean | null => {
   if (
-    !(date1 instanceof Date) ||
-    Number.isNaN(date1.getTime()) ||
-    !(date2 instanceof Date) ||
-    Number.isNaN(date2.getTime())
+    !(date1 instanceof Date)
+    || Number.isNaN(date1.getTime())
+    || !(date2 instanceof Date)
+    || Number.isNaN(date2.getTime())
   ) {
-    return null; // Return null for invalid dates
+    return null // Return null for invalid dates
   }
 
   return (
-    date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate()
-  );
-};
+    date1.getFullYear() === date2.getFullYear()
+    && date1.getMonth() === date2.getMonth()
+    && date1.getDate() === date2.getDate()
+  )
+}
 
 /**
  * Gets the day of the week for a given date.
@@ -91,21 +91,23 @@ export const isSameDay = (date1: Date, date2: Date): boolean | null => {
  * ```
  */
 export const getDayOfWeek = (date: Date | string): string => {
-  if (!date) return '';
+  if (date === undefined || date === null) {
+    return ''
+  }
 
-  const parsedDate = typeof date === 'string' ? new Date(date) : date;
+  const parsedDate = typeof date === 'string' ? new Date(date) : date
 
   if (!(parsedDate instanceof Date) || Number.isNaN(parsedDate.getTime())) {
-    return ''; // Return empty string for invalid dates
+    return '' // Return empty string for invalid dates
   }
 
   const day = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     timeZone: 'UTC',
-  }).format(parsedDate);
+  }).format(parsedDate)
 
-  return day;
-};
+  return day
+}
 
 /**
  * Gets a relative day description based on a given date, e.g., 'Yesterday', 'Last Friday', '2 weeks ago Thursday'.
@@ -126,7 +128,9 @@ export const getDayOfWeek = (date: Date | string): string => {
  * ```
  */
 export const getRelativeDay = (targetDate: Date | string): string => {
-  if (!targetDate) return '';
+  if (targetDate === undefined || targetDate === null) {
+    return ''
+  }
   const daysOfWeek = [
     'Sunday',
     'Monday',
@@ -135,49 +139,55 @@ export const getRelativeDay = (targetDate: Date | string): string => {
     'Thursday',
     'Friday',
     'Saturday',
-  ];
+  ]
 
-  const today = new Date();
-  const target =
-    typeof targetDate === 'string' ? new Date(targetDate) : targetDate;
+  const today = new Date()
+  const target
+    = typeof targetDate === 'string' ? new Date(targetDate) : targetDate
 
   if (Number.isNaN(target.getTime())) {
-    return '';
+    return ''
   }
 
   // Normalize both dates to UTC midnight for consistent comparison
   const todayMidnight = Date.UTC(
     today.getUTCFullYear(),
     today.getUTCMonth(),
-    today.getUTCDate()
-  );
+    today.getUTCDate(),
+  )
   const targetMidnight = Date.UTC(
     target.getUTCFullYear(),
     target.getUTCMonth(),
-    target.getUTCDate()
-  );
+    target.getUTCDate(),
+  )
 
   // Calculate difference in days
   const dayDifference = Math.round(
-    (targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24)
-  );
+    (targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24),
+  )
 
   // Simple cases
-  if (dayDifference === 0) return 'Today';
-  if (dayDifference === -1) return 'Yesterday';
-  if (dayDifference === 1) return 'Tomorrow';
+  if (dayDifference === 0) {
+    return 'Today'
+  }
+  if (dayDifference === -1) {
+    return 'Yesterday'
+  }
+  if (dayDifference === 1) {
+    return 'Tomorrow'
+  }
 
   // Week-based descriptions
-  const weeksDifference = Math.floor(Math.abs(dayDifference) / 7);
-  const relativeDay = daysOfWeek[new Date(targetMidnight).getUTCDay()];
+  const weeksDifference = Math.floor(Math.abs(dayDifference) / 7)
+  const relativeDay = daysOfWeek[new Date(targetMidnight).getUTCDay()]
 
   if (dayDifference < 0) {
     return weeksDifference === 0
       ? `Last ${relativeDay}`
-      : `${weeksDifference} week${weeksDifference > 1 ? 's' : ''} ago ${relativeDay}`;
+      : `${weeksDifference} week${weeksDifference > 1 ? 's' : ''} ago ${relativeDay}`
   }
 
   return weeksDifference === 0
     ? `Next ${relativeDay}`
-    : `In ${weeksDifference} week${weeksDifference > 1 ? 's' : ''} ${relativeDay}`;
-};
+    : `In ${weeksDifference} week${weeksDifference > 1 ? 's' : ''} ${relativeDay}`
+}

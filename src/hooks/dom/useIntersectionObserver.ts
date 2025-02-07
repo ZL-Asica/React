@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 /**
  * useIntersectionObserver
@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
  * if an element is visible within the viewport.
  *
  * @param {React.RefObject<HTMLElement>} reference - A React ref pointing to the target DOM element.
- * @param {IntersectionObserverInit} [options={}] - Configuration options for the IntersectionObserver (e.g., threshold, root, rootMargin).
+ * @param {IntersectionObserverInit} [options] - Configuration options for the IntersectionObserver (e.g., threshold, root, rootMargin).
  * @returns {boolean} `isIntersecting` - Whether the element is currently visible in the viewport.
  *
  * @example
@@ -41,25 +41,27 @@ import { useEffect, useState } from 'react';
  */
 export const useIntersectionObserver = (
   reference: React.RefObject<HTMLElement>,
-  options: IntersectionObserverInit = {}
+  options: IntersectionObserverInit = {},
 ): boolean => {
-  const [isIntersecting, setIntersecting] = useState(false);
+  const [isIntersecting, setIntersecting] = useState(false)
 
   useEffect(() => {
-    if (!reference.current) return;
+    if (reference.current === null) {
+      return
+    }
 
     const observer = new IntersectionObserver(([entry]) => {
-      setIntersecting(entry.isIntersecting);
-    }, options);
+      setIntersecting(entry.isIntersecting)
+    }, options)
 
-    const element = reference.current;
-    observer.observe(element);
+    const element = reference.current
+    observer.observe(element)
 
     return () => {
-      observer.unobserve(element);
-      observer.disconnect();
-    };
-  }, [reference, options]);
+      observer.unobserve(element)
+      observer.disconnect()
+    }
+  }, [reference, options])
 
-  return isIntersecting;
-};
+  return isIntersecting
+}

@@ -37,7 +37,7 @@ bun add @zl-asica/react
 
 ```ts
 // With deno from JSR
-import { useLocalStorage } from 'jsr:@zl-asica/react';
+import { useLocalStorage } from 'jsr:@zl-asica/react'
 ```
 
 ## Usage
@@ -47,13 +47,19 @@ For more examples, check the [documentation](https://react.zla.app).
 ### Example: `useToggle`
 
 ```tsx
-import { useToggle } from '@zl-asica/react';
+import { useToggle } from '@zl-asica/react'
 
 const App = () => {
-  const [isToggled, toggle] = useToggle(false);
+  const [isToggled, toggle] = useToggle(false)
 
-  return <button onClick={toggle}>{isToggled ? 'ON' : 'OFF'}</button>;
-};
+  return (
+    <button type="button" onClick={toggle}>
+      {isToggled ? 'ON' : 'OFF'}
+    </button>
+  )
+}
+
+export default App
 ```
 
 ## Limitations

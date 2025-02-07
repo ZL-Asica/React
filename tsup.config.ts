@@ -1,5 +1,5 @@
-import { defineConfig } from 'tsup';
-import { preserveDirectivesPlugin } from 'esbuild-plugin-preserve-directives';
+import { preserveDirectivesPlugin } from 'esbuild-plugin-preserve-directives'
+import { defineConfig } from 'tsup'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -15,4 +15,4 @@ export default defineConfig({
       exclude: /utils/,
     }),
   ],
-});
+})

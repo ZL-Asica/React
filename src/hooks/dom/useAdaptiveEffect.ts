@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react'
 
 /**
  * A hook that adapts to the environment: uses `useLayoutEffect` on the client side
@@ -21,5 +21,5 @@ import { useEffect, useLayoutEffect } from 'react';
  * }, [dependencies]);
  * ```
  */
-export const useAdaptiveEffect =
-  typeof globalThis === 'undefined' ? useEffect : useLayoutEffect;
+export const useAdaptiveEffect
+  = typeof globalThis === 'undefined' ? useEffect : useLayoutEffect

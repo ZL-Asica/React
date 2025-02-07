@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import type { RefObject } from 'react';
-import { useEffect, useRef } from 'react';
+import type { RefObject } from 'react'
+import { useDebouncedCallback } from '@/hooks/state'
 
-import { useAdaptiveEffect } from './useAdaptiveEffect';
+import { useEffect, useRef } from 'react'
 
-import { useDebouncedCallback } from '@/hooks/state';
+import { useAdaptiveEffect } from './useAdaptiveEffect'
 
 /**
  * useEventListener
@@ -16,9 +16,9 @@ import { useDebouncedCallback } from '@/hooks/state';
  *
  * @param {string} eventName - The name of the event to listen for (e.g., 'click', 'keydown').
  * @param {(event: T) => void} handler - The callback function to handle the event. Receives the event object as a parameter.
- * @param {EventTarget | null | undefined} [element=window] - The target element to attach the event listener to. Defaults to `globalThis` if not provided.
+ * @param {EventTarget | null | undefined} [element] - The target element to attach the event listener to. Defaults to `globalThis` if not provided.
  * @param {boolean | AddEventListenerOptions} [options] - Additional options to pass to `addEventListener`. Such as `capture` or `once`, etc.
- * @param {number} [debounce=0] - The debounce delay in milliseconds. Defaults to 0ms (no debounce).
+ * @param {number} [debounce] - The debounce delay in milliseconds. Defaults to 0ms (no debounce).
  * @template T - The type of the event object.
  *
  * @example
@@ -65,11 +65,11 @@ export const useEventListener = <
   KH extends keyof HTMLElementEventMap & keyof SVGElementEventMap,
   KM extends keyof MediaQueryListEventMap,
   T extends
-    | HTMLElement
-    | SVGElement
-    | MediaQueryList
-    | Document
-    | typeof globalThis = HTMLElement,
+  | HTMLElement
+  | SVGElement
+  | MediaQueryList
+  | Document
+  | typeof globalThis = HTMLElement,
 >(
   eventName: KW | KH | KM,
   handler: (
@@ -82,30 +82,33 @@ export const useEventListener = <
   ) => void,
   element?: RefObject<T>,
   options?: boolean | AddEventListenerOptions,
-  debounce?: number
+  debounce?: number,
 ): void => {
-  const savedHandler = useRef(handler);
-  const debouncedHandler = debounce
-    ? useDebouncedCallback(handler, debounce)
-    : handler;
+  const savedHandler = useRef(handler)
+  const debouncedHandler = useDebouncedCallback(handler, debounce ?? 0)
+  const effectiveHandler = (debounce !== undefined && debounce > 0) ? debouncedHandler : handler
 
   // Update saved handler whenever it changes
   useAdaptiveEffect(() => {
-    savedHandler.current = debouncedHandler;
-  }, [debouncedHandler]);
-
+    savedHandler.current = debouncedHandler
+    savedHandler.current = effectiveHandler
+  }, [effectiveHandler])
   useEffect(() => {
-    if (typeof globalThis === 'undefined') return;
-    const targetElement: T | Window = element?.current ?? window;
+    if (typeof globalThis === 'undefined') {
+      return
+    }
+    const targetElement: T | Window = element?.current ?? window
 
-    if (!targetElement || !targetElement.addEventListener) return;
+    if (targetElement === null || targetElement === undefined) {
+      return
+    }
 
-    const eventListener = (event: Event) => savedHandler.current(event);
+    const eventListener = (event: Event): void => savedHandler.current(event)
 
-    targetElement.addEventListener(eventName, eventListener, options);
+    targetElement.addEventListener(eventName, eventListener, options)
 
     return () => {
-      targetElement.removeEventListener(eventName, eventListener, options);
-    };
-  }, [eventName, element, options]);
-};
+      targetElement.removeEventListener(eventName, eventListener, options)
+    }
+  }, [eventName, element, options])
+}

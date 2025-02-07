@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import type { RefObject } from 'react';
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useInViewport
@@ -12,8 +12,8 @@ import { useEventListener } from './useEventListener';
  * Allows specifying an offset to consider elements near the edge of the viewport as "visible".
  *
  * @param {RefObject<HTMLElement>} reference - A React ref object pointing to the target element.
- * @param {number} [offset=0] - Offset in pixels to extend the viewport boundary.
- * @param {number} [debounce=100] - The debounce delay in milliseconds for scroll and resize events.
+ * @param {number} [offset] - Offset in pixels to extend the viewport boundary.
+ * @param {number} [debounce] - The debounce delay in milliseconds for scroll and resize events.
  * @returns {boolean} `isVisible` - Whether the element is within the viewport (considering offset).
  *
  * @example
@@ -46,33 +46,35 @@ import { useEventListener } from './useEventListener';
 export const useInViewport = (
   reference: RefObject<HTMLElement>,
   offset: number = 0,
-  debounce: number = 100
+  debounce: number = 100,
 ): boolean => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
 
-  const checkVisibility = () => {
-    if (!reference.current) return;
+  const checkVisibility = useCallback((): void => {
+    if (reference.current === undefined || reference.current === null) {
+      return
+    }
 
-    const rect = reference.current.getBoundingClientRect();
+    const rect = reference.current.getBoundingClientRect()
 
-    const inViewport =
-      rect.top <=
-        (window.innerHeight || document.documentElement.clientHeight) +
-          offset &&
-      rect.bottom >= -offset &&
-      rect.left <=
-        (window.innerWidth || document.documentElement.clientWidth) + offset &&
-      rect.right >= -offset;
+    const inViewport
+      = rect.top
+        <= (window.innerHeight || document.documentElement.clientHeight)
+        + offset
+        && rect.bottom >= -offset
+        && rect.left
+        <= (window.innerWidth || document.documentElement.clientWidth) + offset
+        && rect.right >= -offset
 
-    setIsVisible(inViewport);
-  };
+    setIsVisible(inViewport)
+  }, [reference, offset])
 
   useEffect(() => {
-    checkVisibility();
-  }, [reference, offset]);
+    checkVisibility()
+  }, [reference, offset, checkVisibility])
 
-  useEventListener('scroll', checkVisibility, reference, undefined, debounce);
-  useEventListener('resize', checkVisibility, undefined, undefined, debounce);
+  useEventListener('scroll', checkVisibility, reference, undefined, debounce)
+  useEventListener('resize', checkVisibility, undefined, undefined, debounce)
 
-  return isVisible;
-};
+  return isVisible
+}

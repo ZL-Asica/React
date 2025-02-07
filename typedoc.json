@@ -8,6 +8,7 @@
   "out": "docs/docs", // Output directory
   "plugin": ["typedoc-plugin-markdown"], // Use the markdown plugin
   "tsconfig": "tsconfig.json", // Use this tsconfig file
+  "exclude": ["**/__tests__/**", "node_modules", "dist", "docs"], // Exclude these directories
   "excludeExternals": true,
   "excludePrivate": true,
   "excludeProtected": true,

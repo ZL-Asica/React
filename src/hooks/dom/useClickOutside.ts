@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import type { RefObject } from 'react';
+import type { RefObject } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useClickOutside
@@ -82,19 +82,19 @@ import { useEventListener } from './useEventListener';
 export const useClickOutside = (
   reference: RefObject<HTMLElement | null>,
   handler: () => void,
-  debounce: number = 0
+  debounce: number = 0,
 ): void => {
-  const listener = (event: Event) => {
+  const listener = (event: Event): void => {
     if (
-      !reference.current ||
-      reference.current.contains(event.target as Node)
+      !reference.current
+      || reference.current.contains(event.target as Node)
     ) {
-      return;
+      return
     }
-    handler();
-  };
+    handler()
+  }
 
   // Use our custom event listener hook with generic type
-  useEventListener('mousedown', listener, undefined, undefined, debounce);
-  useEventListener('touchstart', listener, undefined, undefined, debounce);
-};
+  useEventListener('mousedown', listener, undefined, undefined, debounce)
+  useEventListener('touchstart', listener, undefined, undefined, debounce)
+}

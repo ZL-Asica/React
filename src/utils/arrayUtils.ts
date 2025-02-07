@@ -21,15 +21,15 @@
 export const chunkArray = <T>(array: T[], size: number): T[][] => {
   // Handle invalid size by returning the entire array as a single chunk
   if (size <= 0 || !Number.isInteger(size)) {
-    return [array];
+    return [array]
   }
 
-  const result: T[][] = [];
+  const result: T[][] = []
   for (let index = 0; index < array.length; index += size) {
-    result.push(array.slice(index, index + size));
+    result.push(array.slice(index, index + size))
   }
-  return result;
-};
+  return result
+}
 
 /**
  * Removes duplicate elements from an array.
@@ -46,5 +46,5 @@ export const chunkArray = <T>(array: T[], size: number): T[][] => {
  * ```
  */
 export const uniqueArray = <T>(array: T[]): T[] => {
-  return [...new Set(array)];
-};
+  return [...new Set(array)]
+}

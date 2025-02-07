@@ -19,7 +19,7 @@ bun add @zl-asica/react
 
 ```ts
 // With deno from JSR
-import { useLocalStorage } from 'jsr:@zl-asica/react';
+import { useLocalStorage } from 'jsr:@zl-asica/react'
 ```
 
 ## Usage
@@ -31,15 +31,19 @@ Here are some examples to help you get started:
 Toggle between `true` and `false` easily (default value is `false`):
 
 ```tsx
-import { useToggle } from '@zl-asica/react';
+import { useToggle } from '@zl-asica/react'
 
 const ToggleExample = () => {
-  const [isToggled, toggle] = useToggle();
+  const [isToggled, toggle] = useToggle()
 
-  return <button onClick={toggle}>{isToggled ? 'ON' : 'OFF'}</button>;
-};
+  return (
+    <button type="button" onClick={toggle}>
+      {isToggled ? 'ON' : 'OFF'}
+    </button>
+  )
+}
 
-export default ToggleExample;
+export default ToggleExample
 ```
 
 ---
@@ -49,18 +53,27 @@ export default ToggleExample;
 Simplify API calls with built-in error and loading states:
 
 ```tsx
-import { useFetch } from '@zl-asica/react';
+import { useFetch } from '@zl-asica/react'
 
 const FetchExample = () => {
-  const { data, error, loading } = useFetch('https://api.example.com/data');
+  const { data, error, loading } = useFetch('https://api.example.com/data')
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  if (error) {
+    return (
+      <p>
+        Error:
+        {error.message}
+      </p>
+    )
+  }
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
-};
+  return <pre>{JSON.stringify(data, null, 2)}</pre>
+}
 
-export default FetchExample;
+export default FetchExample
 ```
 
 ---
@@ -70,20 +83,25 @@ export default FetchExample;
 Persist state to `localStorage` with ease:
 
 ```tsx
-import { useLocalStorage } from '@zl-asica/react';
+import { useLocalStorage } from '@zl-asica/react'
 
 const LocalStorageExample = () => {
-  const [value, setValue] = useLocalStorage('key', 'default value');
+  const [value, setValue] = useLocalStorage('key', 'default value')
 
   return (
     <div>
-      <p>Value: {value}</p>
-      <button onClick={() => setValue('new value')}>Set New Value</button>
+      <p>
+        Value:
+        {value}
+      </p>
+      <button type="button" onClick={() => setValue('new value')}>
+        Set New Value
+      </button>
     </div>
-  );
-};
+  )
+}
 
-export default LocalStorageExample;
+export default LocalStorageExample
 ```
 
 ---

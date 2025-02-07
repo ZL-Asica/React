@@ -12,9 +12,11 @@
  * ```
  */
 export const capitalize = (input: string): string => {
-  if (!input) return '';
-  return input.charAt(0).toUpperCase() + input.slice(1);
-};
+  if (!input) {
+    return ''
+  }
+  return input.charAt(0).toUpperCase() + input.slice(1)
+}
 
 /**
  * Converts a camelCase string to kebab-case.
@@ -29,8 +31,8 @@ export const capitalize = (input: string): string => {
  * ```
  */
 export const camelCaseToKebabCase = (input: string): string => {
-  return input.replaceAll(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-};
+  return input.replaceAll(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+}
 
 /**
  * Truncates a string to a specified length, appending '...' if truncated.
@@ -47,11 +49,13 @@ export const camelCaseToKebabCase = (input: string): string => {
  * ```
  */
 export const truncate = (input: string, maxLength: number): string => {
-  if (maxLength <= 0 || !input) return '';
+  if (maxLength <= 0 || !input) {
+    return ''
+  }
   return input.length > maxLength
     ? `${input.slice(0, maxLength).trim()}...`
-    : input;
-};
+    : input
+}
 
 /**
  * Converts a string to snake_case.
@@ -66,8 +70,8 @@ export const truncate = (input: string, maxLength: number): string => {
  * ```
  */
 export const toSnakeCase = (input: string): string => {
-  return input.replaceAll(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
-};
+  return input.replaceAll(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()
+}
 
 /**
  * Reverses the characters in a string.
@@ -82,8 +86,8 @@ export const toSnakeCase = (input: string): string => {
  * ```
  */
 export const reverseString = (input: string): string => {
-  return [...input].reverse().join('');
-};
+  return [...input].reverse().join('')
+}
 
 /**
  * Removes special characters from a string, preserving letters, numbers, and spaces.
@@ -103,8 +107,8 @@ export const removeSpecialCharacters = (input: string): string => {
   // \p{L} matches any kind of letter from any language
   // \p{N} matches any kind of numeric character
   // \s matches any kind of whitespace
-  return input.replaceAll(/[^\p{L}\p{N}\s]/gu, '');
-};
+  return input.replaceAll(/[^\p{L}\p{N}\s]/gu, '')
+}
 
 /**
  * Generates a unique identifier by hashing an array of input strings, a timestamp, and a random value.
@@ -123,10 +127,10 @@ export const removeSpecialCharacters = (input: string): string => {
  *
  * @param {string[]} inputValues - An array of input strings (e.g., user ID, file name, or other identifiers).
  *   These will be concatenated to form part of the unique ID input.
- * @param {string} [randomBias=Math.random().toString(36)+Math.random().toString(36)] -
+ * @param {string} [randomBias] -
  *   An optional random bias string. By default, it combines two random Base-36 strings, providing
  *   approximately \(2^{104}\) possible combinations, significantly reducing collision risk.
- * @param {number} [length=6] - The desired length of the resulting unique ID.
+ * @param {number} [length] - The desired length of the resulting unique ID.
  *   Must be at least 1. Defaults to 6 characters.
  * @returns {Promise<string>} A promise resolving to the generated unique ID as a hexadecimal string.
  *   If the environment lacks support for `crypto.subtle.digest`, a non-hashed random string is returned.
@@ -165,27 +169,27 @@ export const removeSpecialCharacters = (input: string): string => {
 export const generateUniqueId = async (
   inputValues: string[],
   randomBias: string = Math.random().toString(36) + Math.random().toString(36),
-  length: number = 6
+  length: number = 6,
 ): Promise<string> => {
   // Validate length
   if (length < 1) {
-    throw new RangeError('Length must be at least 1.');
+    throw new RangeError('Length must be at least 1.')
   }
 
-  const encoder = new TextEncoder();
+  const encoder = new TextEncoder()
   const uniqueId = encoder.encode(
-    inputValues.join('') + Date.now() + randomBias
-  );
+    inputValues.join('') + Date.now() + randomBias,
+  )
 
   // Check for crypto.subtle.digest support
-  if (crypto?.subtle?.digest) {
-    const hashBuffer = await crypto.subtle.digest('SHA-256', uniqueId);
-    const hashArray = [...new Uint8Array(hashBuffer)];
-    const hash = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-    return hash.slice(0, length);
+  if (crypto !== undefined && crypto.subtle !== undefined && typeof crypto.subtle.digest === 'function') {
+    const hashBuffer = await crypto.subtle.digest('SHA-256', uniqueId)
+    const hashArray = [...new Uint8Array(hashBuffer)]
+    const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+    return hash.slice(0, length)
   }
 
   // Simple fallback for environments with no crypto support
-  const fallbackSimple = Math.random().toString(36) + Date.now().toString(36);
-  return fallbackSimple.slice(0, length);
-};
+  const fallbackSimple = Math.random().toString(36) + Date.now().toString(36)
+  return fallbackSimple.slice(0, length)
+}

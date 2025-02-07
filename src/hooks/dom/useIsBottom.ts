@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useIsBottom
@@ -10,10 +10,10 @@ import { useEventListener } from './useEventListener';
  * A custom React hook to track whether a specific element (or the page) is scrolled to the bottom.
  * It supports global targets (e.g., `window` or `document.documentElement`) and specific `HTMLElement`s.
  *
- * @param {number} [offset=0] - The offset in pixels to consider as "bottom". If the scroll position is within this offset, it is considered at the bottom.
- * @param {EventTarget | null | undefined} [element=globalThis] - The target element to observe scroll position. Defaults to `globalThis` (commonly `window`).
- * @param {number} [debounce=0] - The debounce delay in milliseconds for scroll and resize events. Defaults to `0` (no debounce).
- * @param {boolean} [initialValue=false] - The initial value for `isBottom`. Defaults to `false`.
+ * @param {number} [offset] - The offset in pixels to consider as "bottom". If the scroll position is within this offset, it is considered at the bottom.
+ * @param {EventTarget | null | undefined} [element] - The target element to observe scroll position. Defaults to `globalThis` (commonly `window`).
+ * @param {number} [debounce] - The debounce delay in milliseconds for scroll and resize events. Defaults to `0` (no debounce).
+ * @param {boolean} [initialValue] - The initial value for `isBottom`. Defaults to `false`.
  * @returns {boolean} `isBottom` - Whether the target element is currently scrolled to the bottom.
  *
  * @example
@@ -65,27 +65,27 @@ export const useIsBottom = (
   offset: number = 0,
   element?: HTMLElement | null | undefined,
   debounce: number = 0,
-  initialValue: boolean = false
+  initialValue: boolean = false,
 ): boolean => {
-  const [isBottom, setIsBottom] = useState(initialValue);
+  const [isBottom, setIsBottom] = useState(initialValue)
 
-  const checkBottom = () => {
-    const target = element ?? document.documentElement;
+  const checkBottom = (): void => {
+    const target = element ?? document.documentElement
 
     // Handle cases where `scrollTop`, `scrollHeight`, or `clientHeight` may not exist
-    const scrollTop = target.scrollTop || 0;
-    const scrollHeight = target.scrollHeight || 0;
-    const clientHeight = target.clientHeight || 0;
+    const scrollTop = target.scrollTop || 0
+    const scrollHeight = target.scrollHeight || 0
+    const clientHeight = target.clientHeight || 0
 
     // Explicitly handle case where scrollHeight is 0 or undefined
     if (scrollHeight === 0) {
-      setIsBottom(false);
-      return;
+      setIsBottom(false)
+      return
     }
 
-    const isAtBottom = scrollTop + clientHeight >= scrollHeight - offset;
-    setIsBottom(isAtBottom);
-  };
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - offset
+    setIsBottom(isAtBottom)
+  }
 
   // Attach scroll and resize listeners
   useEventListener(
@@ -93,15 +93,15 @@ export const useIsBottom = (
     checkBottom,
     element ? { current: element } : undefined,
     undefined,
-    debounce
-  );
+    debounce,
+  )
   useEventListener(
     'resize',
     checkBottom,
     element ? { current: element } : undefined,
     undefined,
-    debounce
-  );
+    debounce,
+  )
 
-  return isBottom;
-};
+  return isBottom
+}

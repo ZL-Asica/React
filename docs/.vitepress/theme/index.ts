@@ -1,3 +1,7 @@
-import './custom.css';
+import DefaultTheme from 'vitepress/theme-without-fonts'
 
-export { default } from 'vitepress/theme';
+import './custom.css'
+
+export default {
+  extends: DefaultTheme,
+}

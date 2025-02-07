@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react'
 
 /**
  * useBoolean
@@ -8,7 +8,7 @@ import { useState, useCallback } from 'react';
  * A custom React hook for managing a boolean state with helper functions.
  * Provides functions to toggle the value, set it to `true`, or set it to `false`.
  *
- * @param {boolean} [initialValue=false] - The initial value of the boolean state. Defaults to `false`.
+ * @param {boolean} [initialValue] - The initial value of the boolean state. Defaults to `false`.
  * @returns {{
  *   value: boolean;
  *   toggle: () => void;
@@ -39,18 +39,18 @@ import { useState, useCallback } from 'react';
  * ```
  */
 export const useBoolean = (
-  initialValue: boolean = false
+  initialValue: boolean = false,
 ): {
-  value: boolean;
-  toggle: () => void;
-  setTrue: () => void;
-  setFalse: () => void;
-} => {
-  const [value, setValue] = useState<boolean>(initialValue);
+    value: boolean
+    toggle: () => void
+    setTrue: () => void
+    setFalse: () => void
+  } => {
+  const [value, setValue] = useState<boolean>(initialValue)
 
-  const toggle = useCallback(() => setValue((previous) => !previous), []);
-  const setTrue = useCallback(() => setValue(true), []);
-  const setFalse = useCallback(() => setValue(false), []);
+  const toggle = useCallback(() => setValue(previous => !previous), [])
+  const setTrue = useCallback(() => setValue(true), [])
+  const setFalse = useCallback(() => setValue(false), [])
 
-  return { value, toggle, setTrue, setFalse };
-};
+  return { value, toggle, setTrue, setFalse }
+}

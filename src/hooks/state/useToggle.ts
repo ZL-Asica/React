@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useBoolean } from './useBoolean';
+import { useBoolean } from './useBoolean'
 
 /**
  * useToggle
@@ -8,7 +8,7 @@ import { useBoolean } from './useBoolean';
  * A custom React hook for managing a boolean toggle state.
  * Provides the current value and a function to toggle it between `true` and `false`.
  *
- * @param {boolean} [initialValue=false] - The initial state of the toggle. Defaults to `false`.
+ * @param {boolean} [initialValue] - The initial state of the toggle. Defaults to `false`.
  * @returns {[boolean, () => void]} An array containing:
  *   - `value`: The current boolean state.
  *   - `toggle`: A function to toggle the state between `true` and `false`.
@@ -30,8 +30,8 @@ import { useBoolean } from './useBoolean';
  * ```
  */
 export const useToggle = (
-  initialValue: boolean = false
+  initialValue: boolean = false,
 ): [boolean, () => void] => {
-  const { value, toggle } = useBoolean(initialValue);
-  return [value, toggle];
-};
+  const { value, toggle } = useBoolean(initialValue)
+  return [value, toggle]
+}

@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react'
 
 /**
  * useCounter
@@ -8,7 +8,7 @@ import { useState, useCallback } from 'react';
  * A custom React hook for managing a numeric counter state with helper functions.
  * Provides functions to increment, decrement, and reset the counter value.
  *
- * @param {number} [initialValue=0] - The initial value of the counter. Defaults to `0`.
+ * @param {number} [initialValue] - The initial value of the counter. Defaults to `0`.
  * @returns {{
  *   count: number;
  *   increment: () => void;
@@ -39,24 +39,24 @@ import { useState, useCallback } from 'react';
  * ```
  */
 export const useCounter = (
-  initialValue: number = 0
+  initialValue: number = 0,
 ): {
-  count: number;
-  increment: () => void;
-  decrement: () => void;
-  reset: () => void;
-} => {
-  const [count, setCount] = useState<number>(initialValue);
+    count: number
+    increment: () => void
+    decrement: () => void
+    reset: () => void
+  } => {
+  const [count, setCount] = useState<number>(initialValue)
 
   const increment = useCallback(
-    () => setCount((previousCount) => previousCount + 1),
-    []
-  );
+    () => setCount(previousCount => previousCount + 1),
+    [],
+  )
   const decrement = useCallback(
-    () => setCount((previousCount) => previousCount - 1),
-    []
-  );
-  const reset = useCallback(() => setCount(initialValue), [initialValue]);
+    () => setCount(previousCount => previousCount - 1),
+    [],
+  )
+  const reset = useCallback(() => setCount(initialValue), [initialValue])
 
-  return { count, increment, decrement, reset };
-};
+  return { count, increment, decrement, reset }
+}

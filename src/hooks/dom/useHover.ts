@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import { useState, useCallback } from 'react';
-import type { RefObject } from 'react';
+import type { RefObject } from 'react'
+import { useCallback, useState } from 'react'
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from './useEventListener'
 
 /**
  * useHover
@@ -31,17 +31,17 @@ import { useEventListener } from './useEventListener';
  * ```
  */
 export const useHover = <T extends HTMLElement = HTMLElement>(
-  element: RefObject<T>
+  element: RefObject<T>,
 ): boolean => {
-  const [isHovered, setHovered] = useState(false);
+  const [isHovered, setHovered] = useState(false)
 
   // Handlers for hover events
-  const handleMouseOver = useCallback(() => setHovered(true), []);
-  const handleMouseOut = useCallback(() => setHovered(false), []);
+  const handleMouseOver = useCallback(() => setHovered(true), [])
+  const handleMouseOut = useCallback(() => setHovered(false), [])
 
   // Attach hover event listeners
-  useEventListener('mouseover', handleMouseOver, element);
-  useEventListener('mouseout', handleMouseOut, element);
+  useEventListener('mouseover', handleMouseOver, element)
+  useEventListener('mouseout', handleMouseOut, element)
 
-  return isHovered;
-};
+  return isHovered
+}

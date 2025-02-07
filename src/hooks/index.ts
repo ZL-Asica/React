@@ -1,3 +1,3 @@
-export * from './state';
-export * from './dom';
-export * from './async';
+export * from './async'
+export * from './dom'
+export * from './state'
