@@ -1,4 +1,5 @@
 pnpm changeset version
+echo "Remember to run 'pnpm changeset' to create a changeset"
 node sync-version.mjs
 git add CHANGELOG.md .changeset/ package.json pnpm-lock.yaml jsr.json
 lint-staged

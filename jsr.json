@@ -1,6 +1,6 @@
 {
   "name": "@zl-asica/react",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "license": "MIT",
   "exports": "./src/index.ts",
   "importMap": "./import_map.json",

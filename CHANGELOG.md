@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.3.11
+
+### Patch Changes
+
+- Add useHideOnScrollDown and truncateToNearestWord
+
 ## 0.3.10
 
 ### Patch Changes

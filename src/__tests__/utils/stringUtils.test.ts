@@ -6,6 +6,7 @@ import {
   reverseString,
   toSnakeCase,
   truncate,
+  truncateToNearestWord,
 } from '@/utils/stringUtils'
 
 describe('string Utils', () => {
@@ -139,5 +140,37 @@ describe('generateUniqueId', () => {
     const id2 = await generateUniqueId(['user123', 'photo.png'], randomBias2)
 
     expect(id1).not.toEqual(id2) // Different biases should produce different IDs
+  })
+})
+
+describe('truncateToNearestWord', () => {
+  it('should return the original string if within the limit', () => {
+    expect(truncateToNearestWord('Short text', 50)).toBe('Short text')
+  })
+
+  it('should truncate at the nearest whole word', () => {
+    expect(truncateToNearestWord('This is a long example sentence.', 10)).toBe('This is a...')
+    expect(truncateToNearestWord('Hello world, how are you?', 15)).toBe('Hello world,...')
+  })
+
+  it('should not add "..." if the string is exactly maxLength', () => {
+    expect(truncateToNearestWord('Perfect fit!', 13)).toBe('Perfect fit!')
+  })
+
+  it('should handle strings with no spaces correctly', () => {
+    expect(truncateToNearestWord('Supercalifragilisticexpialidocious', 10)).toBe('Supercalif...')
+  })
+
+  it('should handle edge cases gracefully', () => {
+    expect(truncateToNearestWord('', 10)).toBe('') // Empty string
+    expect(truncateToNearestWord('   ', 10)).toBe('   ') // String of spaces
+    expect(truncateToNearestWord('Word', 2)).toBe('Wo...') // Too short to keep anything
+  })
+
+  it('should throw an error for invalid inputs', () => {
+    // @ts-expect-error: Testing invalid inputs
+    expect(() => truncateToNearestWord(123, 10)).toThrow()
+    expect(() => truncateToNearestWord('Valid', -5)).toThrow()
+    expect(() => truncateToNearestWord('Valid', 0)).toThrow()
   })
 })

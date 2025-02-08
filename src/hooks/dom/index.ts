@@ -6,6 +6,7 @@
 export { useAdaptiveEffect } from './useAdaptiveEffect'
 export { useClickOutside } from './useClickOutside'
 export { useEventListener } from './useEventListener'
+export { useHideOnScrollDown } from './useHideOnScrollDown'
 export { useHover } from './useHover'
 export { useIntersectionObserver } from './useIntersectionObserver'
 export { useInViewport } from './useInViewport'
