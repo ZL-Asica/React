@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.3.13
+
+### Patch Changes
+
+- fix useHideOnScrollDown type, add useTimeout
+
 ## 0.3.12
 
 ### Patch Changes

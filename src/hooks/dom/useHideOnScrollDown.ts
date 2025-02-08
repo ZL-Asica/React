@@ -10,7 +10,7 @@ import { useEventListener } from './useEventListener'
  * Custom hook to toggle visibility on scroll.
  * It hides the element when scrolling down and shows it when scrolling up.
  *
- * @param {React.RefObject<HTMLElement>} [targetRef] - The reference to the target element (e.g., header). If not provided, defaults to `null` (uses `threshold`).
+ * @param {React.RefObject<HTMLElement | null>} [targetRef] - The reference to the target element (e.g., header). If not provided, defaults to `null` (uses `threshold`).
  * @param {number} [threshold] - The scroll position threshold before hiding (used if `targetRef` is not provided).
  * @returns {boolean} - Whether the element should be visible.
  *
@@ -37,7 +37,7 @@ import { useEventListener } from './useEventListener'
  * )
  */
 export const useHideOnScrollDown = (
-  targetRef?: RefObject<HTMLElement>,
+  targetRef?: RefObject<HTMLElement | null>,
   threshold: number = 50,
 ): boolean => {
   const [isVisible, setIsVisible] = useState(true)
