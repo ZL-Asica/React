@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.3.12
+
+### Patch Changes
+
+- update pre-push hook
+
 ## 0.3.11
 
 ### Patch Changes

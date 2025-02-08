@@ -12,6 +12,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+echo "Running docs..."
+pnpm run docs
+
+if [ $? -ne 0 ]; then
+  echo "Docs failed. Aborting push."
+  exit 1
+fi
+
 echo "Running changeset version check..."
 pnpm changeset version
 echo "Running changeset version check...done"

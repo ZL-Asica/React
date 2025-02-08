@@ -67,7 +67,7 @@ describe('useHideOnScrollDown', () => {
   })
 
   it('should handle null targetRef gracefully', () => {
-    const targetRef = { current: null } as React.RefObject<HTMLElement>
+    const targetRef = { current: null } as unknown as React.RefObject<HTMLElement>
     const { result } = renderHook(() => useHideOnScrollDown(targetRef, 50))
 
     act(() => {
@@ -99,7 +99,6 @@ describe('useHideOnScrollDown', () => {
     expect(result.current).toBe(false)
 
     act(() => {
-      // @ts-expect-error - testing ref change
       targetRef.current = container2
       rerender({ ref: targetRef })
     })
