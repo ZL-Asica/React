@@ -1,5 +1,6 @@
 /**
- * Capitalizes the first letter of a string.
+ * Capitalizes the first letter of a string. Just like `String.prototype.charAt(0).toUpperCase()`,
+ * but without the need to call `slice(1)` to get the rest of the string.
  *
  * @param {string} input - The string to capitalize.
  * @returns {string} The capitalized string. Returns an empty string if the input is empty.
@@ -136,9 +137,6 @@ export const removeSpecialCharacters = (input: string): string => {
  *   If the environment lacks support for `crypto.subtle.digest`, a non-hashed random string is returned.
  *
  * @throws {RangeError} Throws if the `length` parameter is less than 1.
- * @throws {TypeError} Throws if any element in `inputValues` or `randomBias` is not a string,
- *   or if `length` is not a number.
- * @throws {Error} Throws if `crypto.subtle.digest` is not supported and no fallback mechanism is possible.
  *
  * @example
  * Example 1: Generate a unique ID with default length (6 characters) using `await`.
@@ -195,8 +193,6 @@ export const generateUniqueId = async (
 }
 
 /**
- * truncateToNearestWord
- *
  * Truncate a string to the nearest whole word within a given length limit.
  * If the string exceeds the max length, it appends '...' at the end.
  * If no space is found within the truncated string, and the string is longer than the max length,
@@ -226,7 +222,8 @@ export const generateUniqueId = async (
  */
 export const truncateToNearestWord = (input: string, maxLength: number): string => {
   if (typeof input !== 'string' || typeof maxLength !== 'number' || maxLength <= 0) {
-    throw new TypeError('Invalid input: input must be a string and maxLength must be a positive number.')
+    // Return the input as-is if invalid
+    return input
   }
 
   // No truncation needed

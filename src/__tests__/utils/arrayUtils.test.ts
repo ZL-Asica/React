@@ -1,4 +1,4 @@
-import { chunkArray, uniqueArray } from '@/utils/arrayUtils'
+import { chunkArray, isAllZeroArray, uniqueArray } from '@/utils/arrayUtils'
 
 describe('chunkArray', () => {
   it('should divide the array into chunks of the specified size', () => {
@@ -48,5 +48,39 @@ describe('uniqueArray', () => {
   it('should return an empty array if the input array is empty', () => {
     const unique = uniqueArray([])
     expect(unique).toEqual([])
+  })
+})
+
+describe('isAllZeroArray', () => {
+  it('should handle non-array inputs', () => {
+    // @ts-expect-error Testing invalid input
+    const result = isAllZeroArray(123)
+    expect(result).toBe(false)
+  })
+
+  it('should return true for an empty array', () => {
+    const result = isAllZeroArray([])
+    expect(result).toBe(true)
+  })
+
+  it('should return false if any element is not a number', () => {
+    // @ts-expect-error Testing invalid input
+    const result = isAllZeroArray(['a', 'b', 'c'])
+    expect(result).toBe(false)
+  })
+
+  it('should return false if any element is NaN', () => {
+    const result = isAllZeroArray([1, 2, 3, Number.NaN])
+    expect(result).toBe(false)
+  })
+
+  it('should return false if one or more elements are not zero', () => {
+    const result = isAllZeroArray([0, 0, 0, 1])
+    expect(result).toBe(false)
+  })
+
+  it ('should return true if all elements are zero', () => {
+    const result = isAllZeroArray([0, 0, 0, 0])
+    expect(result).toBe(true)
   })
 })

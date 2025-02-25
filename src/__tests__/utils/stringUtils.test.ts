@@ -167,10 +167,10 @@ describe('truncateToNearestWord', () => {
     expect(truncateToNearestWord('Word', 2)).toBe('Wo...') // Too short to keep anything
   })
 
-  it('should throw an error for invalid inputs', () => {
+  it('should return the original string if invalid inputs are provided', () => {
     // @ts-expect-error: Testing invalid inputs
-    expect(() => truncateToNearestWord(123, 10)).toThrow()
-    expect(() => truncateToNearestWord('Valid', -5)).toThrow()
-    expect(() => truncateToNearestWord('Valid', 0)).toThrow()
+    expect(truncateToNearestWord(123, 10)).toBe(123)
+    expect(truncateToNearestWord('Valid', -5)).toBe('Valid')
+    expect(truncateToNearestWord('Valid', 0)).toBe('Valid')
   })
 })

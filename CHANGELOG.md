@@ -1,5 +1,16 @@
 # @zl-asica/react
 
+## 0.3.14
+
+### Patch Changes
+
+- Remove unsless throw Error & add isAllZeroArray()
+
+  - `src/utils/stringUtils.ts`: Removed throw Error in `truncateToNearestWord` when user input illegal value (return raw data instead).
+  - `src/utils/arrayUtils.ts`: Added `isAllZeroArray` function to check if all elements in an array are zero.
+  - Remove some unclear JSDoc comments.
+  - Bump up some dependencies.
+
 ## 0.3.13
 
 ### Patch Changes
