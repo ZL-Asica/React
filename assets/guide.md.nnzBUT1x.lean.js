@@ -1,1 +1,0 @@
-import{_ as i,c as a,o as n,ag as l}from"./chunks/framework.CkHWihve.js";const g=JSON.parse('{"title":"Guide","description":"","frontmatter":{},"headers":[],"relativePath":"guide.md","filePath":"guide.md"}'),t={name:"guide.md"};function h(p,s,e,k,E,r){return n(),a("div",null,s[0]||(s[0]=[l("",22)]))}const o=i(t,[["render",h]]);export{g as __pageData,o as default};
