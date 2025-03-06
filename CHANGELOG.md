@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.3.15
+
+### Patch Changes
+
+- Add robustness of dateUtils formatDate()
+
 ## 0.3.14
 
 ### Patch Changes

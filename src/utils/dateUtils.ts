@@ -3,14 +3,15 @@
  *
  * Supported placeholders in the format string:
  * - `YYYY`: Four-digit year (e.g., 2024).
+ * - `YY`: Two-digit year (e.g., 24).
  * - `MM`: Two-digit month (e.g., 01 for January).
  * - `DD`: Two-digit day of the month (e.g., 09).
  * - `HH`: Two-digit hour in 24-hour format (e.g., 15 for 3 PM).
  * - `mm`: Two-digit minutes (e.g., 07).
  * - `ss`: Two-digit seconds (e.g., 45).
  *
- * @param {Date} date - The `Date` object to format.
- * @param {string} [format] - The format string specifying the desired output format.
+ * @param {Date | string | null} [date] - The date to format. Can be a `Date` object or a string.
+ * @param {string} [format] - The format string. Defaults to `'YYYY-MM-DD'`.
  * @returns {string} A formatted date string. Returns an empty string if the input is invalid.
  *
  * @example
@@ -22,13 +23,23 @@
  * formatDate(now, 'MM/DD/YYYY'); // '11/18/2024'
  * ```
  */
-export const formatDate = (date: Date, format = 'YYYY-MM-DD'): string => {
-  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+export const formatDate = (date?: Date | string | null, format = 'YYYY-MM-DD'): string => {
+  if (date === undefined || date === null) {
+    date = new Date()
+  }
+  else if (typeof date === 'string') {
+    date = new Date(date)
+    if (Number.isNaN(date.getTime())) {
+      return '' // Return empty string for invalid dates
+    }
+  }
+  else if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
     return '' // Return empty string for invalid dates
   }
 
   const map: Record<string, string> = {
     YYYY: `${date.getFullYear()}`,
+    YY: `${date.getFullYear()}`.slice(-2),
     MM: `${date.getMonth() + 1}`.padStart(2, '0'),
     DD: `${date.getDate()}`.padStart(2, '0'),
     HH: `${date.getHours()}`.padStart(2, '0'),
@@ -36,7 +47,7 @@ export const formatDate = (date: Date, format = 'YYYY-MM-DD'): string => {
     ss: `${date.getSeconds()}`.padStart(2, '0'),
   }
 
-  return format.replaceAll(/YYYY|MM|DD|HH|mm|ss/g, matched => map[matched])
+  return format.replaceAll(/YYYY|YY|MM|DD|HH|mm|ss/g, matched => map[matched])
 }
 
 /**
