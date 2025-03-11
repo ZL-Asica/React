@@ -3,8 +3,6 @@
 import { useCallback, useState } from 'react'
 
 /**
- * useCounter
- *
  * A custom React hook for managing a numeric counter state with helper functions.
  * Provides functions to increment, decrement, and reset the counter value.
  *

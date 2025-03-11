@@ -6,8 +6,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useInViewport
- *
  * A custom React hook to check if a DOM element is within the viewport.
  * Allows specifying an offset to consider elements near the edge of the viewport as "visible".
  *

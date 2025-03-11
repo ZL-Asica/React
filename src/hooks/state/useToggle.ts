@@ -3,8 +3,6 @@
 import { useBoolean } from './useBoolean'
 
 /**
- * useToggle
- *
  * A custom React hook for managing a boolean toggle state.
  * Provides the current value and a function to toggle it between `true` and `false`.
  *

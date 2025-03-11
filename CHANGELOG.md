@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.3.17
+
+### Patch Changes
+
+- Docs update
+
 ## 0.3.16
 
 ### Patch Changes

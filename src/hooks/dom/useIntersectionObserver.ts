@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react'
 
 /**
- * useIntersectionObserver
- *
  * A custom React hook that uses the Intersection Observer API to determine
  * if an element is visible within the viewport.
  *

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 
 /**
- * useFetch
- *
  * A custom React hook to fetch data from an API and manage its state.
  * Automatically handles loading, error, and result states.
  * Supports cancellation of the fetch operation on component unmount.

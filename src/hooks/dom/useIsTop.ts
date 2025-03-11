@@ -5,8 +5,6 @@ import { useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useIsTop
- *
  * A custom React hook to track whether a specific element (or the page) is scrolled to the top.
  * It supports global targets (e.g., `window` or `document.documentElement`) and specific `HTMLElement`s.
  *

@@ -3,8 +3,6 @@
 import { useState } from 'react'
 
 /**
- * useArray
- *
  * A custom React hook for managing an array state with helper functions to modify it.
  *
  * @template T - The type of elements in the array.

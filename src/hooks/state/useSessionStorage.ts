@@ -3,8 +3,6 @@
 import { useState } from 'react'
 
 /**
- * useSessionStorage
- *
  * A custom React hook for managing state that is synchronized with `sessionStorage`.
  * Provides error handling by returning a status object along with the value and setter.
  *

@@ -5,8 +5,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useScrollPosition
- *
  * A custom React hook to track the vertical scroll position of a specific element or the window.
  * Automatically updates whenever the user scrolls.
  *

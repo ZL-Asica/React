@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
 /**
- * useAsync
- *
  * A custom React hook to handle asynchronous functions with state management for loading, error, and result.
  * Useful for API calls or other asynchronous operations.
  *

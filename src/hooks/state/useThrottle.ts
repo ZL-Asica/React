@@ -3,8 +3,6 @@
 import { useCallback, useRef } from 'react'
 
 /**
- * useThrottle
- *
  * A custom React hook to throttle the execution of a callback function.
  * Ensures the callback is only executed at most once every specified delay.
  *

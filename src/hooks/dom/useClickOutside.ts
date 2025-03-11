@@ -5,8 +5,6 @@ import type { RefObject } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useClickOutside
- *
  * A custom React hook that detects clicks or touch events outside the specified target element.
  * It is useful for closing dropdowns, modals, or menus when a user interacts outside the specified element.
  * The handler function is called when the user clicks or touches outside the referenced element.

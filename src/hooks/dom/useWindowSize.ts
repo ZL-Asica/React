@@ -5,8 +5,6 @@ import { useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useWindowSize
- *
  * A custom React hook to track the current window size.
  * Automatically updates whenever the window is resized.
  *

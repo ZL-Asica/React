@@ -5,8 +5,6 @@ import { useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useKeyPress
- *
  * A custom React hook to track whether a specific key is pressed. This hook is useful for implementing keyboard shortcuts or detecting specific key actions in your application.
  * The key detection is case-sensitive and supports optional debouncing for optimized performance during rapid key presses.
  *

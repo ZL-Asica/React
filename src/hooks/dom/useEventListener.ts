@@ -8,8 +8,6 @@ import { useEffect, useRef } from 'react'
 import { useAdaptiveEffect } from './useAdaptiveEffect'
 
 /**
- * useEventListener
- *
  * A custom React hook for attaching an event listener to a target element with automatic cleanup.
  * This hook is useful for adding event listeners to DOM elements or the window object.
  * It also supports optional debouncing to limit how often the handler is invoked.

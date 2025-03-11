@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 /**
- * useDebouncedCallback
- *
  * A custom React hook to debounce a callback function. The debounced function will only be executed
  * after a specified period of inactivity.
  *

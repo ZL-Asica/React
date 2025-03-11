@@ -25,7 +25,7 @@ const vitePressConfig = {
       { text: 'Guide', link: '/guide' },
       { text: 'Docs', link: '/docs/' },
       { text: `v${pkg.version}`, items: [
-        { text: 'Changelog', link: 'https://github.com/ZL-Asica/SuzuBlog/releases' },
+        { text: 'Changelog', link: 'https://github.com/ZL-Asica/React/blob/main/CHANGELOG.md' },
       ] },
     ],
     sidebar: {

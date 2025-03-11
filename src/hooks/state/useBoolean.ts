@@ -3,8 +3,6 @@
 import { useCallback, useState } from 'react'
 
 /**
- * useBoolean
- *
  * A custom React hook for managing a boolean state with helper functions.
  * Provides functions to toggle the value, set it to `true`, or set it to `false`.
  *

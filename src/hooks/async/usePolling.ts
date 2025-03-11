@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * usePolling
- *
  * A custom React hook to execute a callback function at a fixed interval.
  * Supports dynamically updating the callback or stopping the polling by setting the delay to `null`.
  *

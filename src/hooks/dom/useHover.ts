@@ -6,8 +6,6 @@ import { useCallback, useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * useHover
- *
  * A custom React hook to track whether a referenced element is being hovered.
  *
  * @param {RefObject<T>} element - A React ref object pointing to the target element.
