@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const documentationDirectory = path.resolve('./docs/docs')
+let renamedIndexFiles = 0
 
 // Rename README.md to index.md and fix links containing 'functions/'
 function renameREADMEtoIndex(filePath) {
@@ -16,7 +17,6 @@ function renameREADMEtoIndex(filePath) {
 
   // Rename the file
   fs.renameSync(filePath, newPath)
-  console.log(`Renamed ${filePath} to ${newPath} and fixed links.`)
 }
 
 // Fix Markdown content
@@ -70,12 +70,14 @@ function moveOutFunctions(directory) {
     const files = fs.readdirSync(functionsDirectory)
 
     // Move all files to the parent directory
+    let movedFiles = 0
     for (const file of files) {
       const oldPath = path.join(functionsDirectory, file)
       const newPath = path.join(directory, file)
       fs.renameSync(oldPath, newPath)
-      console.log(`Moved ${file} to ${directory}`)
+      movedFiles++
     }
+    console.log(`Moved ${movedFiles} files out of 'functions' folder.`)
 
     // Delete the 'functions' folder if it's empty
     fs.rmdirSync(functionsDirectory)
@@ -99,10 +101,9 @@ function traverseDocuments(directory) {
       }
     }
     else if (file.endsWith('.md')) {
-      console.log(`Processing file: ${file}`)
       fixMarkdown(fullPath)
       if (file === 'README.md') {
-        console.log(`Renaming file: ${file} to index.md`)
+        renamedIndexFiles++
         renameREADMEtoIndex(fullPath)
       }
     }
@@ -111,3 +112,7 @@ function traverseDocuments(directory) {
 
 // Run the script
 traverseDocuments(documentationDirectory)
+
+if (renamedIndexFiles > 0) {
+  console.log(`\nRenamed ${renamedIndexFiles} README.md files to index.md and fixed links.`)
+}

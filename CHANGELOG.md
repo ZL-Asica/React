@@ -1,5 +1,13 @@
 # @zl-asica/react
 
+## 0.3.16
+
+### Patch Changes
+
+- dcbfba5: Fix `threshold` param for useHideOnScrollDown()
+
+  Update doc header and `fix-markdown.mjs` script logging logic.
+
 ## 0.3.15
 
 ### Patch Changes

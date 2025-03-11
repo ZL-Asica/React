@@ -27,14 +27,14 @@ export const useTimeout = (callback: (() => void) | void, delay: number = 0): vo
 
   useEffect(() => {
     if (delay <= 0) {
-      if (callback instanceof Function) {
+      if (typeof callback === 'function') {
         callback()
       }
       return
     }
 
     timeoutRef.current = setTimeout(() => {
-      if (callback instanceof Function) {
+      if (typeof callback === 'function') {
         callback()
       }
     }, delay)

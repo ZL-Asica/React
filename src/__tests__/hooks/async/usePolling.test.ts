@@ -54,7 +54,7 @@ describe('usePolling', () => {
     })
     expect(callback).toHaveBeenCalledTimes(1)
 
-    // 卸载 Hook
+    // Unmount the hook
     unmount()
 
     act(() => {

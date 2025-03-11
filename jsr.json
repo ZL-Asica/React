@@ -1,12 +1,19 @@
 {
   "name": "@zl-asica/react",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "license": "MIT",
   "exports": "./src/index.ts",
   "importMap": "./import_map.json",
   "publish": {
-    "include": ["src/**/*.ts", "README.md", "LICENSE"],
-    "exclude": ["src/__tests__", "node_modules"]
+    "include": [
+      "src/**/*.ts",
+      "README.md",
+      "LICENSE"
+    ],
+    "exclude": [
+      "src/__tests__",
+      "node_modules"
+    ]
   },
   "keywords": [
     "react",
