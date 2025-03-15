@@ -1,5 +1,13 @@
 # @zl-asica/react
 
+## 0.4.1
+
+### Patch Changes
+
+- Bug fix for useTheme in Nextjs
+
+  - In Next.js, the globalthis may be tried to be accessed before client side fully loaded, which will cause an error.
+
 ## 0.4.0
 
 ### Minor Changes

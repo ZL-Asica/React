@@ -67,7 +67,7 @@ jobs:
 
       # Step 8: Publish to JSR
       - name: 🌟 Publish to JSR
-        run: pnpm dlx jsr publish --allow-dirty
+        run: pnpm dlx jsr publish --allow-dirty || true
 
   deploy-docs:
     runs-on: ubuntu-latest

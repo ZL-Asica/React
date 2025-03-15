@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useAdaptiveEffect } from '@/hooks/dom'
+import { useState } from 'react'
 
 /**
  * Retrieves the stored theme from localStorage and checks if it has expired.
@@ -106,12 +107,10 @@ export const useTheme = (
     isDarkTheme: boolean
     toggleTheme: () => void
   } => {
-  const systemPrefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(
-    getStoredTheme(themeStorageKey, expirationDays) === 'dark' || systemPrefersDark,
-  )
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false)
 
-  useEffect(() => {
+  useAdaptiveEffect(() => {
+    const systemPrefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches
     const storedTheme = getStoredTheme(themeStorageKey, expirationDays)
     if (storedTheme !== null) {
       setIsDarkTheme(storedTheme === 'dark')
@@ -121,7 +120,7 @@ export const useTheme = (
       setIsDarkTheme(systemPrefersDark)
       document.documentElement.classList.toggle('dark', systemPrefersDark)
     }
-  }, [systemPrefersDark, themeStorageKey, expirationDays])
+  }, [themeStorageKey, expirationDays])
 
   /**
    * Toggles between light and dark themes, updating `localStorage` and class list.
