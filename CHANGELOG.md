@@ -1,5 +1,16 @@
 # @zl-asica/react
 
+## 0.4.0
+
+### Minor Changes
+
+- Add useTheme() hook for dark mode
+
+  - Detects system preference (`prefers-color-scheme: dark`).
+  - Saves the user's selection in `localStorage` with an expiration time.
+  - If the stored theme is older than `expirationDays`, it resets to system default (and localStorage is cleared).
+  - Uses Tailwind CSS `.dark` class for styling.
+
 ## 0.3.17
 
 ### Patch Changes
