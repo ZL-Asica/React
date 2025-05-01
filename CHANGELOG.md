@@ -1,5 +1,13 @@
 # @zl-asica/react
 
+## 0.5.0
+
+### Minor Changes
+
+- Add useObfuscatedEmail state hook for email obfuscates
+
+  - This is a React hook that obfuscates an email address to prevent spam bots from scraping it.
+
 ## 0.4.1
 
 ### Patch Changes
