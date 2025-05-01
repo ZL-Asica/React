@@ -46,7 +46,7 @@ export const useHideOnScrollDown = (
 
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
-  const [hideThreshold, setHideThreshold] = useState(actualThreshold(targetRef, threshold))
+  const [hideThreshold, setHideThreshold] = useState(() => actualThreshold(targetRef, threshold))
 
   // When targetRef changes, update the hideThreshold
   useEffect(() => {

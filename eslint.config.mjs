@@ -16,4 +16,9 @@ export default antfu({
   rules: {
     'no-console': 'off',
   },
+}, {
+  files: ['src/**/*.ts'],
+  rules: {
+    'react-hooks-extra/no-direct-set-state-in-use-effect': 'off',
+  },
 })
