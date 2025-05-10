@@ -1,5 +1,3 @@
-'use client'
-
 import { useAdaptiveEffect } from '@/hooks/dom'
 import { useState } from 'react'
 

@@ -1,5 +1,3 @@
-'use client'
-
 import type { RefObject } from 'react'
 import { useDebouncedCallback } from '@/hooks/state'
 

@@ -1,5 +1,15 @@
 # @zl-asica/react
 
+## 0.7.0
+
+### Minor Changes
+
+- Separate export for server and client side
+
+  - Before this, only can import from the root of `@zl-asica/react` package.
+  - Now, you can import from `@zl-asica/react/utils` and `@zl-asica/react/hooks` for server and client side utils and hooks respectively.
+  - This change is to improve the developer experience and make it easier to find the right utils and hooks for the right environment.
+
 ## 0.6.0
 
 ### Minor Changes
