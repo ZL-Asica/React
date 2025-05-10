@@ -1,5 +1,15 @@
 # @zl-asica/react
 
+## 0.6.0
+
+### Minor Changes
+
+- Add assignUUID function for react for list key
+
+  - This function generates a unique identifier for each item in a array, ensuring that each item has a distinct key when rendering lists in React. This is particularly useful for optimizing rendering performance and preventing issues with React's reconciliation process.
+  - When calling from client side, it will use `crypto.randomUUID()` to generate a unique identifier.
+  - When calling from server side, it will use a function based on `Math.random()` to generate a unique identifier.
+
 ## 0.5.0
 
 ### Minor Changes
