@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.7.3
+
+### Patch Changes
+
+- Fix github release workflow permission
+
 ## 0.7.2
 
 ### Patch Changes

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read # Publish no need to write
+      contents: write # Required for github release
       packages: write # Required for NPM publish
       id-token: write # Required for JSR publish
 
@@ -87,6 +87,7 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           awk "/^##[[:space:]]*${VERSION//./\\.}/,/^##[[:space:]]/" CHANGELOG.md | head -n -1 > release-notes.md || echo "No changelog found for ${VERSION}" > release-notes.md
+          cat release-notes.md
 
       # Step 12: 🚀 Create GitHub Release with assets
       - name: 🚀 Create GitHub Release
