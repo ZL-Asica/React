@@ -1,0 +1,1 @@
+import{_ as t,c as s,o as a,ag as i}from"./chunks/framework.BmLMQRXF.js";const u=JSON.parse('{"title":"SSR","description":"","frontmatter":{},"headers":[],"relativePath":"guide/ssr.md","filePath":"guide/ssr.md"}'),o={name:"guide/ssr.md"};function r(n,e,l,d,c,h){return a(),s("div",null,e[0]||(e[0]=[i("",24)]))}const g=t(o,[["render",r]]);export{u as __pageData,g as default};
