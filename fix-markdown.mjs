@@ -4,13 +4,13 @@ import path from 'node:path'
 const documentationDirectory = path.resolve('./docs/docs')
 let renamedIndexFiles = 0
 
-// Rename README.md to index.md and fix links containing 'functions/'
+// Rename README.md to index.md and fix links containing 'functions/', 'variables/', or 'types/'
 function renameREADMEtoIndex(filePath) {
   const newPath = path.join(path.dirname(filePath), 'index.md')
 
-  // Read file content and fix 'functions/' links
+  // Read file content and fix 'functions/', 'variables/', or 'types/' links
   let content = fs.readFileSync(filePath, 'utf8')
-  content = content.replaceAll('functions/', './')
+  content = content.replaceAll('functions/', './').replaceAll('variables/', './').replaceAll('types/', './').replaceAll('[@zl-asica/react/', '[').replaceAll('](@zl-asica/react/', '](')
 
   // Write the fixed content back
   fs.writeFileSync(filePath, content, 'utf8')
@@ -34,7 +34,7 @@ function fixMarkdown(filePath) {
       continue
     }
 
-    if (line.startsWith('## Index') || line.startsWith('### Functions')) {
+    if (line.startsWith('## Index') || line.startsWith('### Functions') || line.startsWith('### Variables') || line.startsWith('### Types')) {
       continue
     }
     else if (line.startsWith('## Modules')) {
@@ -42,6 +42,12 @@ function fixMarkdown(filePath) {
     }
     else if (line.startsWith('# Function:')) {
       line = line.replace('# Function:', '#')
+    }
+    else if (line.startsWith('# Variable:')) {
+      line = line.replace('# Variable:', '#')
+    }
+    else if (line.startsWith('# Type:')) {
+      line = line.replace('# Type:', '#')
     }
     else if (line.startsWith('## Example')) {
       skipProcessing = true
@@ -60,29 +66,75 @@ function fixMarkdown(filePath) {
   fs.writeFileSync(filePath, fixedContent, 'utf8')
 }
 
-// Move files out of 'functions' folder and delete the folder
-function moveOutFunctions(directory) {
-  const functionsDirectory = path.join(directory, 'functions')
+// Move files out of 'functions', 'variables', and 'types' folders and delete the folders
+function moveOutFunctionsVariablesTypes(directory, type) {
+  const subDirectory = path.join(directory, type)
+
   if (
-    fs.existsSync(functionsDirectory)
-    && fs.statSync(functionsDirectory).isDirectory()
+    (fs.existsSync(subDirectory)
+      && fs.statSync(subDirectory).isDirectory())
   ) {
-    const files = fs.readdirSync(functionsDirectory)
+    const files = fs.readdirSync(subDirectory)
 
     // Move all files to the parent directory
     let movedFiles = 0
     for (const file of files) {
-      const oldPath = path.join(functionsDirectory, file)
+      const oldPath = path.join(subDirectory, file)
       const newPath = path.join(directory, file)
       fs.renameSync(oldPath, newPath)
       movedFiles++
     }
-    console.log(`Moved ${movedFiles} files out of 'functions' folder.`)
+    console.log(`Moved ${movedFiles} files out of '${type}' folder.`)
 
-    // Delete the 'functions' folder if it's empty
-    fs.rmdirSync(functionsDirectory)
-    console.log(`Deleted empty folder: ${functionsDirectory}`)
+    // Delete the 'functions', 'variables', or 'types' folder if it's empty
+    fs.rmdirSync(subDirectory)
+    console.log(`Deleted empty folder: ${subDirectory}`)
   }
+}
+
+// Rename scoped folders like "@zl-asica/react/utils" to "utils"
+function renameScopedUtilsFolder(directory) {
+  const parts = directory.split(path.sep)
+  const lastPart = parts.at(-1)
+
+  const grandparent = parts.at(-3)
+
+  if (grandparent && grandparent.startsWith('@zl-asica')) {
+    const newPath = path.join('/', ...parts.slice(1, -3), lastPart)
+
+    if (!fs.existsSync(directory)) {
+      console.warn(`⚠️ Folder to rename does not exist: ${directory}`)
+      return directory
+    }
+
+    fs.renameSync(directory, newPath)
+    console.log(`🔁 Renamed scoped folder '${directory}' to '${newPath}'`)
+
+    const removeParentFolder = path.join(documentationDirectory, '@zl-asica', 'react')
+    const removeGradParentFolder = path.join(documentationDirectory, '@zl-asica')
+
+    try {
+      if (fs.existsSync(directory)) {
+        fs.rmdirSync(directory)
+        console.log(`🗑️ Removed empty folder: ${directory}`)
+      }
+      if (fs.existsSync(removeParentFolder)) {
+        fs.rmdirSync(removeParentFolder)
+        console.log(`🗑️ Removed empty folder: ${removeParentFolder}`)
+      }
+      if (fs.existsSync(removeGradParentFolder)) {
+        fs.rmdirSync(removeGradParentFolder)
+        console.log(`🗑️ Removed empty folder: ${removeGradParentFolder}`)
+      }
+    }
+    catch (e) {
+      console.warn(`⚠️ Failed to clean up parent folders: ${e.message}`)
+    }
+
+    return newPath
+  }
+
+  return directory
 }
 
 // Traverse and process documents
@@ -93,11 +145,13 @@ function traverseDocuments(directory) {
     const fullPath = path.join(directory, file)
 
     if (fs.statSync(fullPath).isDirectory()) {
-      traverseDocuments(fullPath)
+      const renamedPath = renameScopedUtilsFolder(fullPath)
+      traverseDocuments(renamedPath)
 
-      // Handle 'functions' directory specifically
-      if (path.basename(fullPath) === 'functions') {
-        moveOutFunctions(path.dirname(fullPath))
+      // Handle 'functions', 'variables', and 'types' directories specifically
+      const baseName = path.basename(renamedPath)
+      if (['functions', 'variables', 'types'].includes(baseName)) {
+        moveOutFunctionsVariablesTypes(path.dirname(renamedPath), baseName)
       }
     }
     else if (file.endsWith('.md')) {

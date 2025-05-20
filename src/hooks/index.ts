@@ -1,5 +1,8 @@
 /**
  * This module contains hooks for asynchronous operations, DOM interactions, and state management. Only works in the browser (client-side).
+ *
+ * Use `@zl-asica/react/hooks` for hooks in CSR (Client-Side Rendering). `@zl-asica/react` will also works.
+ *
  * @module @zl-asica/react/hooks
  * @example
  * ```tsx

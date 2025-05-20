@@ -69,6 +69,40 @@ jobs:
       - name: 🌟 Publish to JSR
         run: pnpm dlx jsr publish --allow-dirty || true
 
+      # Step 9: Create GitHub Release with changelog and /dist output
+      - name: 📦 Zip build output
+        run: |
+          zip -r dist.zip dist
+
+      # Step 10: 🔍 Read version from package.json
+      - name: 🔍 Extract version from package.json
+        id: version
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "version=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      # Step 11: 📝 Extract changelog for this version
+      - name: 📝 Extract changelog section
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          awk "/^##[[:space:]]*${VERSION//./\\.}/,/^##[[:space:]]/" CHANGELOG.md | head -n -1 > release-notes.md || echo "No changelog found for ${VERSION}" > release-notes.md
+
+      # Step 12: 🚀 Create GitHub Release with assets
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          body_path: release-notes.md
+          files: |
+            dist.zip
+            LICENSE
+            CHANGELOG.md
+            CITATION.cff
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   deploy-docs:
     runs-on: ubuntu-latest
 

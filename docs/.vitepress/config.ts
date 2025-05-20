@@ -29,17 +29,6 @@ const vitePressConfig: UserConfig<DefaultTheme.Config> = {
         { text: 'Changelog', link: 'https://github.com/ZL-Asica/React/blob/main/CHANGELOG.md' },
       ] },
     ],
-    sidebar: {
-      '/': [
-        {
-          text: 'Documentation',
-          items: [
-            { text: 'Introduction', link: '/' },
-            { text: 'Guide', link: '/guide' },
-          ],
-        },
-      ],
-    },
     socialLinks: [
       { icon: 'jsr', link: 'https://jsr.io/@zl-asica/react' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/@zl-asica/react' },

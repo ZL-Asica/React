@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
  * Automatically handles loading, error, and result states.
  * Supports cancellation of the fetch operation on component unmount.
  *
+ * @import { useFetch } from '@zl-asica/react'
+ * @see [useFetch Documentation](https://react.zla.app/docs/hooks/async/useFetch)
  * @template T - The type of the data to fetch.
  * @param {string} url - The API endpoint to fetch data from.
  * @returns {{

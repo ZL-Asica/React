@@ -1,7 +1,22 @@
-//* *
-// * @description
-// * This file is the entry point for all DOM hooks.
-//* *
+/**
+ * Here are all DOM hooks.
+ *
+ * Use `@zl-asica/react/hooks` for all hooks.
+ *
+ * @module
+ * @example
+ * ```tsx
+ * import { useIsTop } from '@zl-asica/react/hooks'
+ *
+ * const App = () => {
+ *   const isTop = useIsTop()
+ *
+ *   return (
+ *     <div>{isTop ? 'Top' : 'Not Top'}</div>
+ *   )
+ * }
+ * ```
+ */
 
 export { useAdaptiveEffect } from './useAdaptiveEffect'
 export { useClickOutside } from './useClickOutside'

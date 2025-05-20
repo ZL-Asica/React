@@ -3,22 +3,22 @@
 layout: home
 
 hero:
-  name: '@zl-asica/react'
-  text: 'Elevate your React development with reusable hooks and utilities'
-  tagline: 'Simplify your workflow with lightweight, powerful tools 🚀'
+  name: "@zl-asica/react"
+  text: "Elevate your React development with reusable hooks and utilities"
+  tagline: "Simplify your workflow with lightweight, powerful tools 🚀"
   image:
     src: /logo.png
-    alt: '@zl-asica/react Logo'
+    alt: "@zl-asica/react Logo"
   actions:
     - theme: brand
       text: 🛠️ Get Started
-      link: /guide
+      link: /guide/getting-started
     - theme: alt
       text: 📖 Full Documentation
       link: /docs/
     - theme: alt
       text: ⭐ GitHub
-      link: https://github.com/zl-asica/react
+      link: https://github.com/ZL-Asica/react
 
 features:
   - icon: 🚀

@@ -1,5 +1,8 @@
 /**
  * This module contains utility functions for arrays, dates, DOM, math, objects, and strings. Compatible with SSR (Server-Side Rendering).
+ *
+ * Use `@zl-asica/react/utils` for utilities functions in SSR (Server-Side Rendering). If you do not need SSR, use `@zl-asica/react` will also works.
+ *
  * @module @zl-asica/react/utils
  * @example
  * ```ts

@@ -1,5 +1,7 @@
 /**
  * This module contains hooks and utilities for React. Use specific `utils` for SSR (Server-Side Rendering).
+ *
+ * @license MIT
  * @module @zl-asica/react
  * @example
  * ```tsx
@@ -27,6 +29,7 @@
  *   )
  * }
  * ```
+ * @see https://react.zla.app/docs/
  */
 export * from './hooks'
 export * from './utils'

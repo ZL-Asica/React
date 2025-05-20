@@ -1,5 +1,15 @@
 # @zl-asica/react
 
+## 0.7.2
+
+### Patch Changes
+
+- Fix multiple documentation issues
+
+  - Fix `Variables` and `Types` documentation
+  - Fix module level documentation
+  - Add auto-release dist files to github release
+
 ## 0.7.1
 
 ### Patch Changes

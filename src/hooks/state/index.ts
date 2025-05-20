@@ -1,7 +1,22 @@
-//* *
-// * @description
-// * This file is the entry point for all state hooks.
-//* *
+/**
+ * Here are all state hooks.
+ *
+ * Use `@zl-asica/react` or `@zl-asica/react/hooks` for all hooks.
+ *
+ * @module
+ * @example
+ * ```tsx
+ * import { useToggle } from '@zl-asica/react/hooks'
+ *
+ * const App = () => {
+ *   const { value, toggle } = useToggle(false)
+ *
+ *   return (
+ *     <button onClick={toggle}>{value ? 'On' : 'Off'}</button>
+ *   )
+ * }
+ * ```
+ */
 
 export { useArray } from './useArray'
 export { useBoolean } from './useBoolean'
