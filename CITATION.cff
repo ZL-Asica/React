@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: '@zl-asica/react'
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Zhuoran
+    family-names: Liu
+    affiliation: Northwestern University
+    orcid: 'https://orcid.org/0009-0008-7221-2324'
+repository-code: 'https://github.com/ZL-Asica/React'
+url: 'https://react.zla.app/'
+abstract: >-
+  A collection of reusable React hooks and utilities.
+  Effortlessly enhance your React projects with custom hooks
+  and utilities.
+keywords:
+  - React
+  - Hooks
+  - Utils
+license: MIT

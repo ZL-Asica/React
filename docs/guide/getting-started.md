@@ -1,4 +1,4 @@
-# Guide
+# Getting Started
 
 Welcome to the **React Hooks and Utils by ZL Asica**! This guide will help you integrate and utilize the library in your React projects.
 
@@ -15,11 +15,13 @@ yarn add @zl-asica/react
 pnpm add @zl-asica/react
 # With bun
 bun add @zl-asica/react
+# With deno
+deno add jsr:@zl-asica/react
 ```
 
 ```ts
 // With deno from JSR
-import { useLocalStorage } from 'jsr:@zl-asica/react'
+import { useToggle } from 'jsr:@zl-asica/react'
 ```
 
 ## Usage
@@ -31,7 +33,7 @@ Here are some examples to help you get started:
 Toggle between `true` and `false` easily (default value is `false`):
 
 ```tsx
-import { useToggle } from '@zl-asica/react'
+import { useToggle } from '@zl-asica/react/hooks'
 
 const ToggleExample = () => {
   const [isToggled, toggle] = useToggle()
@@ -46,44 +48,38 @@ const ToggleExample = () => {
 export default ToggleExample
 ```
 
----
+### Example 2: `assignUUID`
 
-### Example 2: `useFetch`
-
-Simplify API calls with built-in error and loading states:
+Assign a UUID to an array of objects:
 
 ```tsx
-import { useFetch } from '@zl-asica/react'
+// ✅ Works in SSR (Server-Side Rendering)
+import { assignUUID } from '@zl-asica/react/utils'
 
-const FetchExample = () => {
-  const { data, error, loading } = useFetch('https://api.example.com/data')
+const AssignUUIDExample = () => {
+  const data = assignUUID([
+    { id: '1', name: 'John' },
+    { id: '2', name: 'Jane' },
+  ])
 
-  if (loading) {
-    return <p>Loading...</p>
-  }
-  if (error) {
-    return (
-      <p>
-        Error:
-        {error.message}
-      </p>
-    )
-  }
-
-  return <pre>{JSON.stringify(data, null, 2)}</pre>
+  return data.map(item => (
+    // Avoid using `key` prop, use `id` instead
+    <p key={item.id}>
+      {item.id}
+      {item.name}
+    </p>
+  ))
 }
 
-export default FetchExample
+export default AssignUUIDExample
 ```
-
----
 
 ### Example 3: `useLocalStorage`
 
 Persist state to `localStorage` with ease:
 
 ```tsx
-import { useLocalStorage } from '@zl-asica/react'
+import { useLocalStorage } from '@zl-asica/react/hooks'
 
 const LocalStorageExample = () => {
   const [value, setValue] = useLocalStorage('key', 'default value')
@@ -104,7 +100,9 @@ const LocalStorageExample = () => {
 export default LocalStorageExample
 ```
 
----
+## SSR
+
+Using this library in SSR? Check out the [SSR](/guide/ssr) guide.
 
 ## Explore More
 

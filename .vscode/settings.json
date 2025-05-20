@@ -1,4 +1,5 @@
 {
+  "editor.wordWrap": "on",
   "editor.tabSize": 2,
   "search.exclude": {
     "**/.yarn": true,

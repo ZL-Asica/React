@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.7.1
+
+### Patch Changes
+
+- Update documentation add SSR related docs
+
 ## 0.7.0
 
 ### Minor Changes

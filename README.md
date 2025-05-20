@@ -1,4 +1,4 @@
-# React Utilities 🚀
+# React Hooks and Utilities 🚀
 
 [![npm version][npm-version-badge]][npm-versions-link]
 [![JSR][jsr-badge]][jsr-link]
@@ -13,9 +13,12 @@
 
 This repository is **NOT** a reimplementation of React itself. It is a collection of reusable React hooks, utilities, and tools to enhance development productivity. 🎉
 
+If you enjoy using it, please consider giving it a star! ⭐️
+
 ## Features
 
 - 🚀 Lightweight and optimized hooks and utilities for React projects.
+- 🗄️ SSR (Server-Side Rendering) compatible utilities.
 - 📦 Fully typed with TypeScript for better developer experience.
 - 🔒 Clean and consistent utilities for DOM, state, and async operations.
 - ✅ 100% (almost) test coverage with robust testing using Vitest.
@@ -33,6 +36,8 @@ yarn add @zl-asica/react
 pnpm add @zl-asica/react
 # With bun
 bun add @zl-asica/react
+# With deno
+deno add jsr:@zl-asica/react
 ```
 
 ```ts
@@ -44,12 +49,34 @@ import { useLocalStorage } from 'jsr:@zl-asica/react'
 
 For more examples, check the [documentation](https://react.zla.app).
 
+### Example: `assignUUID`
+
+```tsx
+import { assignUUID } from '@zl-asica/react/utils'
+
+const App = () => {
+  // ✅ Works in SSR (Server-Side Rendering)
+  const data = ['John', 'Jane']
+
+  return data.map(assignUUID).map(({ id, value }) => (
+    // Avoid using `key` prop, use `id` instead (Improves performance, follows the best practices of React)
+    <p key={id}>
+      {id}
+      {value}
+    </p>
+  ))
+}
+
+export default App
+```
+
 ### Example: `useToggle`
 
 ```tsx
-import { useToggle } from '@zl-asica/react'
+import { useToggle } from '@zl-asica/react/hooks'
 
 const App = () => {
+  // ✅ Works in the browser (client-side)
   const [isToggled, toggle] = useToggle(false)
 
   return (

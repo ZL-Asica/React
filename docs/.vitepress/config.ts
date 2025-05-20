@@ -1,4 +1,4 @@
-import path from 'node:path'
+import type { DefaultTheme, UserConfig } from 'vitepress'
 
 import { defineConfig } from 'vitepress'
 import { withSidebar } from 'vitepress-sidebar'
@@ -6,10 +6,11 @@ import { withSidebar } from 'vitepress-sidebar'
 import pkg from '../../package.json' with { type: 'json' }
 
 // https://vitepress.dev/reference/site-config
-const vitePressConfig = {
+const vitePressConfig: UserConfig<DefaultTheme.Config> = {
   lang: 'en-US',
   title: '@zl-asica/react',
   description: 'A collection of reusable React hooks and utilities.',
+  cleanUrls: true,
   head: [
     ['meta', { name: 'keywords', content: 'react, hooks, utilities, zl-asica' }],
     ['meta', { name: 'author', content: 'ZL Asica' }],
@@ -22,7 +23,7 @@ const vitePressConfig = {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo.png',
     nav: [
-      { text: 'Guide', link: '/guide' },
+      { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Docs', link: '/docs/' },
       { text: `v${pkg.version}`, items: [
         { text: 'Changelog', link: 'https://github.com/ZL-Asica/React/blob/main/CHANGELOG.md' },
@@ -40,31 +41,37 @@ const vitePressConfig = {
       ],
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/zl-asica/react' },
       { icon: 'jsr', link: 'https://jsr.io/@zl-asica/react' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/@zl-asica/react' },
+      { icon: 'github', link: 'https://github.com/ZL-Asica/react' },
     ],
     search: {
       provider: 'local',
     },
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright &copy; 2024-Present <a href="https://www.zla.pub" target="_blank">ZL Asica</a>',
+      copyright: 'Copyright &copy; 2024-Present <a href="https://zla.pub" target="_blank">ZL Asica</a>',
     },
   },
   ignoreDeadLinks: true,
 }
 
 export default defineConfig(
-  // @ts-expect-error: `withSidebar` is not part of the official VitePress config.
   withSidebar(vitePressConfig, [
     {
-      documentRootPath: path.resolve('/docs'),
+      documentRootPath: 'docs',
+      scanStartPath: 'guide',
+      basePath: '/guide/',
+      resolvePath: '/guide/',
+      useTitleFromFileHeading: true,
+      rootGroupText: 'Guide',
+    },
+    {
+      documentRootPath: 'docs',
       scanStartPath: 'docs',
-      collapsed: false,
+      resolvePath: '/docs/',
       useTitleFromFileHeading: true,
       rootGroupText: 'Documentation',
-      resolvePath: '/docs/',
       useFolderLinkFromIndexFile: true,
     },
   ]),
