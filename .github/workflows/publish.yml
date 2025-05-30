@@ -69,17 +69,17 @@ jobs:
       - name: 🌟 Publish to JSR
         run: pnpm dlx jsr publish --allow-dirty || true
 
-      # Step 9: Create GitHub Release with changelog and /dist output
-      - name: 📦 Zip build output
-        run: |
-          zip -r dist.zip dist
-
-      # Step 10: 🔍 Read version from package.json
+      # Step 9: 🔍 Read version from package.json
       - name: 🔍 Extract version from package.json
         id: version
         run: |
           VERSION=$(jq -r .version package.json)
           echo "version=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      # Step 10: Create GitHub Release with changelog and /dist output
+      - name: 📦 Zip build output
+        run: |
+          tar -czf dist-${{ steps.version.outputs.version }}.tar.gz dist
 
       # Step 11: 📝 Extract changelog for this version
       - name: 📝 Extract changelog section
@@ -94,13 +94,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.version }}
-          name: Release ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
           body_path: release-notes.md
-          files: |
-            dist.zip
-            LICENSE
-            CHANGELOG.md
-            CITATION.cff
+          files: dist-${{ steps.version.outputs.version }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
