@@ -1,11 +1,18 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * A custom React hook to execute a callback function at a fixed interval.
- * Supports dynamically updating the callback or stopping the polling by setting the delay to `null`.
+ * Callback type for {@link usePolling}. It can be either synchronous
+ * or asynchronous. If it returns a Promise, it will be fired-and-forgotten.
+ */
+export type PollingCallback = () => void | Promise<void>
+
+/**
+ * A React hook that executes a callback on a fixed interval.
+ * The callback can be updated over time, and polling can be stopped
+ * at any time by setting `delay` to `null`.
  *
- * @param {() => void} callback - The function to execute at each interval.
- * @param {number | null} delay - The interval in milliseconds. Set to `null` to stop polling.
+ * @param {PollingCallback} callback - The function to call on each interval tick.
+ * @param {number | null} delay - Interval in milliseconds. Set to `null` to stop polling.
  *
  * @example
  * ```tsx
@@ -24,28 +31,25 @@ import { useEffect, useRef } from 'react'
  * ```
  */
 export const usePolling = (
-  callback: () => void,
+  callback: PollingCallback,
   delay: number | null,
 ): void => {
-  const savedCallback = useRef<() => void>(callback)
+  const savedCallback = useRef<PollingCallback>(callback)
 
-  // Update the saved callback whenever it changes
+  // Always keep the latest callback
   useEffect(() => {
     savedCallback.current = callback
   }, [callback])
 
   useEffect(() => {
-    // Stop polling if delay is null
     if (delay === null) {
       return
     }
 
-    // Create the interval
     const id = setInterval(() => {
-      savedCallback.current()
+      void savedCallback.current()
     }, delay)
 
-    // Clear the interval on cleanup
     return () => clearInterval(id)
   }, [delay])
 }

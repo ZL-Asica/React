@@ -22,5 +22,6 @@
  */
 
 export { useAsync } from './useAsync'
+export { useAsyncPolling } from './useAsyncPolling'
 export { useFetch } from './useFetch'
 export { usePolling } from './usePolling'

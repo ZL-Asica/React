@@ -1,22 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useCallback } from 'react'
+import { useAsync } from './useAsync'
 
 /**
- * A custom React hook to fetch data from an API and manage its state.
- * Automatically handles loading, error, and result states.
- * Supports cancellation of the fetch operation on component unmount.
+ * A React hook to fetch JSON data from a URL and manage its `loading`, `error`,
+ * and `data` state. It is built on top of {@link useAsync} and will:
  *
- * @import { useFetch } from '@zl-asica/react'
- * @see [useFetch Documentation](https://react.zla.app/docs/hooks/async/useFetch)
- * @template T - The type of the data to fetch.
- * @param {string} url - The API endpoint to fetch data from.
+ * - Fetch once on mount.
+ * - Refetch whenever the `url` changes.
+ * - Ignore results from outdated requests when multiple fetches are in flight.
+ * - Avoid updating state after the component has unmounted.
+ *
+ * @template T - The type of the JSON payload returned by the API.
+ *
+ * @param {string} url - The URL to fetch from.
+ *
  * @returns {{
  *   data: T | null;
  *   error: Error | null;
  *   loading: boolean;
  * }} An object containing:
- *   - `data`: The fetched data or null if not available.
- *   - `error`: An error object if the fetch operation fails.
- *   - `loading`: A boolean indicating whether the fetch operation is in progress.
+ *   - `data`: The parsed JSON response, or `null` if not yet loaded or on error.
+ *   - `error`: An `Error` instance if the fetch failed.
+ *   - `loading`: Whether a fetch request is currently in progress.
  *
  * @example
  * ```tsx
@@ -41,53 +46,34 @@ export const useFetch = <T>(
   error: Error | null
   loading: boolean
 } => {
-  const [data, setData] = useState<T | null>(null)
-  const [error, setError] = useState<Error | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const fetcher = useCallback(async (): Promise<T> => {
+    const response = await fetch(url)
 
-  useEffect(() => {
-    let isCancelled = false
-
-    const fetchData = async (): Promise<void> => {
-      setLoading(true)
-      setError(null)
-
-      try {
-        const response = await fetch(url)
-        if (!response.ok) {
-          throw new Error(response.statusText || 'Fetch failed')
-        }
-        const result: T = (await response.json()) as T
-        if (!isCancelled) {
-          setData(result)
-        }
-      }
-      catch (fetchError) {
-        if (!isCancelled) {
-          setError(
-            fetchError instanceof Error ? fetchError : new Error('Unknown error'),
-          )
-          setData(null)
-        }
-      }
-      finally {
-        if (!isCancelled) {
-          setLoading(false)
-        }
-      }
+    if (!response.ok) {
+      throw new Error(response.statusText || 'Fetch failed')
     }
 
-    fetchData().catch((error) => {
-      if (!isCancelled) {
-        setError(error instanceof Error ? error : new Error('Unknown error'))
-        setLoading(false)
-      }
-    })
-
-    return () => {
-      isCancelled = true
-    }
+    const result = (await response.json()) as T
+    return result
   }, [url])
 
-  return { data, error, loading }
+  // We want to normalize any kind of error back to `Error`.
+  const {
+    result,
+    error: rawError,
+    loading,
+  } = useAsync<T, [], unknown>(fetcher, true)
+
+  const normalizedError
+    = rawError instanceof Error
+      ? rawError
+      : rawError == null
+        ? null
+        : new Error('Unknown error')
+
+  return {
+    data: result,
+    error: normalizedError,
+    loading,
+  }
 }
