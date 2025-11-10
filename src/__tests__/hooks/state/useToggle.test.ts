@@ -1,6 +1,6 @@
-import { useToggle } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useToggle } from '@/hooks/state'
 
 describe('useToggle', () => {
   it('should initialize with false by default', () => {

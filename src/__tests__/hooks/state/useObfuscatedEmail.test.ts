@@ -1,5 +1,5 @@
-import { useObfuscatedEmail } from '@/hooks/state'
 import { renderHook } from '@testing-library/react'
+import { useObfuscatedEmail } from '@/hooks/state'
 
 describe('useObfuscatedEmail', () => {
   it('returns correct href and text for valid email', async () => {

@@ -1,6 +1,6 @@
-import { useKeyPress } from '@/hooks/dom'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useKeyPress } from '@/hooks/dom'
 
 describe('useKeyPress', () => {
   it('should return false initially', () => {

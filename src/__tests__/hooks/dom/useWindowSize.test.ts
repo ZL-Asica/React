@@ -1,6 +1,6 @@
-import { useWindowSize } from '@/hooks/dom'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useWindowSize } from '@/hooks/dom'
 
 describe('useWindowSize', () => {
   it('should return the current window size', () => {

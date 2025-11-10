@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
@@ -44,11 +44,10 @@ export const useHideOnScrollDown = (
 
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
-  const [hideThreshold, setHideThreshold] = useState(() => actualThreshold(targetRef, threshold))
+  const hideThreshold = useMemo(() => actualThreshold(targetRef, threshold), [targetRef, threshold])
 
-  // When targetRef changes, update the hideThreshold
+  // When targetRef changes, force a scroll event to update visibility
   useEffect(() => {
-    setHideThreshold(actualThreshold(targetRef, threshold))
     globalThis.dispatchEvent(new Event('scroll')) // Force update on scroll
   }, [targetRef, threshold])
 

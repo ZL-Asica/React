@@ -1,6 +1,6 @@
-import { useHover } from '@/hooks/dom'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useHover } from '@/hooks/dom'
 
 describe('useHover', () => {
   it('should detect hover state', () => {

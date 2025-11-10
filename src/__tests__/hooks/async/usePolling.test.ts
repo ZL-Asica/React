@@ -1,6 +1,6 @@
-import { usePolling } from '@/hooks/async'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { usePolling } from '@/hooks/async'
 
 vi.useFakeTimers()
 

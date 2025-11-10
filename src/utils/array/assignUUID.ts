@@ -46,10 +46,10 @@ type WithID<T> = T extends object
  * ```
  */
 export function assignUUID<T extends object>(
-  array: T[]
+  array: T[],
 ): Array<T & { id: string }>
 export function assignUUID<T>(
-  array: T[]
+  array: T[],
 ): Array<{ id: string, value: T }>
 
 /**

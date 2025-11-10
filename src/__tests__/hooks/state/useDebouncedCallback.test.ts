@@ -1,6 +1,6 @@
-import { useDebouncedCallback } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useDebouncedCallback } from '@/hooks/state'
 
 describe('useDebouncedCallback', () => {
   beforeEach(() => {

@@ -37,11 +37,11 @@ import { useCallback, useState } from 'react'
 export const useBoolean = (
   initialValue: boolean = false,
 ): {
-    value: boolean
-    toggle: () => void
-    setTrue: () => void
-    setFalse: () => void
-  } => {
+  value: boolean
+  toggle: () => void
+  setTrue: () => void
+  setFalse: () => void
+} => {
   const [value, setValue] = useState<boolean>(initialValue)
 
   const toggle = useCallback(() => setValue(previous => !previous), [])

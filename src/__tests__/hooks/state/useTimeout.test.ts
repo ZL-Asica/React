@@ -1,5 +1,5 @@
-import { useTimeout } from '@/hooks/state'
 import { renderHook } from '@testing-library/react'
+import { useTimeout } from '@/hooks/state'
 
 vi.useFakeTimers()
 

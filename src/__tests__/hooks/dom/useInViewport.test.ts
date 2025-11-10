@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 
-import { useInViewport } from '@/hooks/dom'
 import { renderHook } from '@testing-library/react'
+import { useInViewport } from '@/hooks/dom'
 
 describe('useInViewport', () => {
   let referenceMock: Partial<HTMLElement>

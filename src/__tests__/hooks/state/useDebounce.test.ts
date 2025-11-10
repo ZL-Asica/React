@@ -1,6 +1,6 @@
-import { useDebounce } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useDebounce } from '@/hooks/state'
 
 vi.useFakeTimers()
 

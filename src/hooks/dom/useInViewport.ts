@@ -1,11 +1,48 @@
 import type { RefObject } from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useEventListener } from './useEventListener'
 
 /**
+ * Compute whether a given element is inside the viewport, optionally
+ * extending the viewport bounds by a pixel offset.
+ *
+ * The check is based on the element's `getBoundingClientRect()` and compares
+ * it against the current viewport width and height.
+ *
+ * @param {HTMLElement | null | undefined} element - The DOM element to check.
+ * @param {number} offset - Offset in pixels to extend the viewport boundaries on all sides.
+ * @returns {boolean} `true` if the element intersects the extended viewport, otherwise `false`.
+ */
+const computeVisibility = (
+  element: HTMLElement | null | undefined,
+  offset: number,
+): boolean => {
+  if (!element) {
+    return false
+  }
+
+  const rect = element.getBoundingClientRect()
+  const viewportHeight
+    = window.innerHeight || document.documentElement.clientHeight
+  const viewportWidth
+    = window.innerWidth || document.documentElement.clientWidth
+
+  return (
+    rect.top <= viewportHeight + offset
+    && rect.bottom >= -offset
+    && rect.left <= viewportWidth + offset
+    && rect.right >= -offset
+  )
+}
+
+/**
  * A custom React hook to check if a DOM element is within the viewport.
  * Allows specifying an offset to consider elements near the edge of the viewport as "visible".
+ *
+ * The initial visibility is computed synchronously on mount based on the
+ * current `reference.current` value, and then kept up to date on `scroll`
+ * and `resize` events.
  *
  * @param {RefObject<HTMLElement>} reference - A React ref object pointing to the target element.
  * @param {number} [offset] - Offset in pixels to extend the viewport boundary.
@@ -44,33 +81,21 @@ export const useInViewport = (
   offset: number = 0,
   debounce: number = 100,
 ): boolean => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(() =>
+    typeof window === 'undefined'
+      ? false
+      : computeVisibility(reference.current, offset),
+  )
 
-  const checkVisibility = useCallback((): void => {
-    if (reference.current === undefined || reference.current === null) {
+  const handleChange = (): void => {
+    if (typeof window === 'undefined') {
       return
     }
+    setIsVisible(computeVisibility(reference.current, offset))
+  }
 
-    const rect = reference.current.getBoundingClientRect()
-
-    const inViewport
-      = rect.top
-        <= (window.innerHeight || document.documentElement.clientHeight)
-        + offset
-        && rect.bottom >= -offset
-        && rect.left
-        <= (window.innerWidth || document.documentElement.clientWidth) + offset
-        && rect.right >= -offset
-
-    setIsVisible(inViewport)
-  }, [reference, offset])
-
-  useEffect(() => {
-    checkVisibility()
-  }, [reference, offset, checkVisibility])
-
-  useEventListener('scroll', checkVisibility, reference, undefined, debounce)
-  useEventListener('resize', checkVisibility, undefined, undefined, debounce)
+  useEventListener('scroll', handleChange, reference, undefined, debounce)
+  useEventListener('resize', handleChange, undefined, undefined, debounce)
 
   return isVisible
 }

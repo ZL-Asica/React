@@ -1,6 +1,6 @@
-import { useCounter } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useCounter } from '@/hooks/state'
 
 describe('useCounter', () => {
   it('should initialize with the default value', () => {

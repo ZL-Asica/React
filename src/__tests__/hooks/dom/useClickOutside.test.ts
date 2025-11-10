@@ -1,6 +1,6 @@
-import { useClickOutside } from '@/hooks/dom'
-
 import { renderHook } from '@testing-library/react'
+
+import { useClickOutside } from '@/hooks/dom'
 
 describe('useClickOutside', () => {
   it('should trigger the callback when clicking outside the ref element', () => {

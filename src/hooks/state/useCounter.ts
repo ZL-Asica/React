@@ -37,11 +37,11 @@ import { useCallback, useState } from 'react'
 export const useCounter = (
   initialValue: number = 0,
 ): {
-    count: number
-    increment: () => void
-    decrement: () => void
-    reset: () => void
-  } => {
+  count: number
+  increment: () => void
+  decrement: () => void
+  reset: () => void
+} => {
   const [count, setCount] = useState<number>(initialValue)
 
   const increment = useCallback(

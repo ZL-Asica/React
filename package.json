@@ -29,26 +29,25 @@
   ],
   "sideEffects": false,
   "exports": {
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.js",
-      "default": "./dist/utils/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./hooks": {
       "types": "./dist/hooks/index.d.ts",
-      "import": "./dist/hooks/index.js",
-      "default": "./dist/hooks/index.js"
+      "import": "./dist/hooks/index.js"
     },
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
+    "CHANGELOG.md",
     "LICENSE",
     "README.md",
     "dist"
@@ -57,57 +56,59 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "tsup",
-    "build:watch": "tsup --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "test": "vitest",
     "test:ci": "vitest run --coverage",
     "test:watch": "vitest --coverage --watch",
+    "typecheck": "tsc --noEmit",
     "version:bump": "changeset version",
     "release": "changeset version && changeset publish",
     "test:fast": "vitest run",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "docs": "typedoc --exclude 'src/__tests__/**/*' && pnpm docs:clean",
-    "docs:clean": "node fix-markdown.mjs",
-    "docs:dev": "vitepress dev docs --host --open",
+    "docs": "typedoc && pnpm docs:clean",
+    "docs:clean": "node fix-markdown.mjs && rm -rf docs/.vitepress/dist docs/.vitepress/cache",
+    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --host --open",
+    "docs:publish:ci": "pnpm run docs && rm -rf docs/api.index.md && pnpm run docs:build",
+    "docs:preview": "vitepress preview docs",
     "commitlint": "commitlint --edit",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.13.2",
-    "@changesets/cli": "^2.29.4",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@eslint-react/eslint-plugin": "^1.50.0",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@antfu/eslint-config": "^6.2.0",
+    "@changesets/cli": "^2.29.7",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint-react/eslint-plugin": "^2.3.4",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
-    "@types/node": "^22.15.29",
-    "@types/react": "^19.1.6",
-    "@vitest/coverage-v8": "3.1.4",
-    "@vitest/ui": "^3.1.4",
-    "eslint": "^9.28.0",
-    "eslint-plugin-format": "^1.0.1",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.2",
+    "@vitest/coverage-v8": "4.0.8",
+    "@vitest/ui": "^4.0.8",
+    "eslint": "^9.39.1",
+    "eslint-plugin-format": "^1.0.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
     "husky": "^9.1.7",
-    "jsdom": "^26.1.0",
-    "lint-staged": "^16.1.0",
-    "prettier": "^3.5.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tsup": "^8.5.0",
-    "typedoc": "^0.28.5",
-    "typedoc-plugin-markdown": "^4.6.3",
-    "typescript": "^5.8.3",
-    "vitepress": "^1.6.3",
-    "vitepress-sidebar": "^1.31.1",
-    "vitest": "^3.1.4"
+    "jsdom": "^27.1.0",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsdown": "^0.16.1",
+    "typedoc": "^0.28.14",
+    "typedoc-plugin-markdown": "^4.9.0",
+    "typescript": "^5.9.3",
+    "vitepress": "2.0.0-alpha.12",
+    "vitepress-sidebar": "^1.33.0",
+    "vitest": "^4.0.8"
   },
   "lint-staged": {
     "**/*.{ts,tsx,mjs,js,json,css,md,yml}": [

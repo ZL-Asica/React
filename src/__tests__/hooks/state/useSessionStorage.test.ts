@@ -1,6 +1,6 @@
-import { useSessionStorage } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useSessionStorage } from '@/hooks/state'
 
 describe('useSessionStorage', () => {
   beforeEach(() => {

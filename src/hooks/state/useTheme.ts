@@ -1,5 +1,5 @@
-import { useAdaptiveEffect } from '@/hooks/dom'
 import { useState } from 'react'
+import { useAdaptiveEffect } from '@/hooks/dom'
 
 /**
  * Retrieves the stored theme from localStorage and checks if it has expired.
@@ -101,10 +101,10 @@ export const useTheme = (
   themeStorageKey: string = 'color-theme',
   expirationDays: number = 3,
 ):
-  {
-    isDarkTheme: boolean
-    toggleTheme: () => void
-  } => {
+{
+  isDarkTheme: boolean
+  toggleTheme: () => void
+} => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false)
 
   useAdaptiveEffect(() => {

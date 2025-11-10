@@ -1,6 +1,6 @@
-import { useAsync } from '@/hooks/async'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useAsync } from '@/hooks/async'
 
 describe('useAsync', () => {
   const mockAsyncFunction = vi.fn().mockResolvedValue('Success!')

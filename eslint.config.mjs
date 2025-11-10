@@ -21,4 +21,9 @@ export default antfu({
   rules: {
     'react-hooks-extra/no-direct-set-state-in-use-effect': 'off',
   },
+}, {
+  files: ['docs/.vitepress/**.vue'],
+  vue: {
+    a11y: true,
+  },
 })

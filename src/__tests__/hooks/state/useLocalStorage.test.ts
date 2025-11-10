@@ -1,6 +1,6 @@
-import { useLocalStorage } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useLocalStorage } from '@/hooks/state'
 
 describe('useLocalStorage', () => {
   beforeEach(() => {

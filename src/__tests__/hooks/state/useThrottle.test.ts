@@ -1,6 +1,6 @@
-import { useThrottle } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useThrottle } from '@/hooks/state'
 
 describe('useThrottle', () => {
   vi.useFakeTimers()

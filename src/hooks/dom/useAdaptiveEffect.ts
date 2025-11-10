@@ -19,5 +19,5 @@ import { useEffect, useLayoutEffect } from 'react'
  * }, [dependencies]);
  * ```
  */
-export const useAdaptiveEffect
+export const useAdaptiveEffect: typeof useEffect
   = typeof globalThis === 'undefined' ? useEffect : useLayoutEffect

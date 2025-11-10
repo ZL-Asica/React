@@ -1,6 +1,6 @@
-import { useIsBottom } from '@/hooks/dom'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useIsBottom } from '@/hooks/dom'
 
 describe('useIsBottom', () => {
   beforeEach(() => {

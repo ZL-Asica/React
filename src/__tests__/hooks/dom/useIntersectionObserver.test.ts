@@ -1,95 +1,128 @@
 import type { RefObject } from 'react'
-
-import { useIntersectionObserver } from '@/hooks/dom'
 import { act, renderHook } from '@testing-library/react'
+import { useIntersectionObserver } from '@/hooks/dom'
 
-const mockIntersectionObserver = () => {
-  const observeMock = vi.fn()
-  const unobserveMock = vi.fn()
-  const disconnectMock = vi.fn()
+let originalIntersectionObserver: typeof IntersectionObserver | undefined
 
-  globalThis.IntersectionObserver = vi.fn(() => ({
-    observe: observeMock,
-    unobserve: unobserveMock,
-    disconnect: disconnectMock,
-  })) as unknown as typeof IntersectionObserver
+// For assertions
+let lastObserver: MockIntersectionObserver | null = null
+let lastCallback: IntersectionObserverCallback | null = null
+let lastOptions: IntersectionObserverInit | undefined
 
-  return { observeMock, unobserveMock, disconnectMock }
+class MockIntersectionObserver implements IntersectionObserver {
+  readonly root: Element | null = null
+  readonly rootMargin = ''
+  readonly thresholds: ReadonlyArray<number> = []
+
+  observe = vi.fn<(target: Element) => void>()
+  unobserve = vi.fn<(target: Element) => void>()
+  disconnect = vi.fn<() => void>()
+  takeRecords = vi.fn<() => IntersectionObserverEntry[]>(() => [])
+
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+    MockIntersectionObserver.setLastInstance(this, callback, options)
+  }
+
+  static setLastInstance(
+    instance: MockIntersectionObserver,
+    callback: IntersectionObserverCallback,
+    options?: IntersectionObserverInit,
+  ) {
+    lastObserver = instance
+    lastCallback = callback
+    lastOptions = options
+  }
 }
+
+// Replace / return back global IntersectionObserver
+beforeAll(() => {
+  originalIntersectionObserver = globalThis.IntersectionObserver
+  globalThis.IntersectionObserver = MockIntersectionObserver
+})
+
+// Clear state before each test
+beforeEach(() => {
+  lastObserver = null
+  lastCallback = null
+  lastOptions = undefined
+  vi.clearAllMocks()
+})
+
+afterAll(() => {
+  if (originalIntersectionObserver) {
+    globalThis.IntersectionObserver = originalIntersectionObserver
+  }
+})
 
 describe('useIntersectionObserver', () => {
   it('should observe and unobserve the element', () => {
-    const { observeMock, unobserveMock } = mockIntersectionObserver()
-
     const reference = { current: document.createElement('div') }
-    const { unmount } = renderHook(() => useIntersectionObserver(reference))
 
-    expect(observeMock).toHaveBeenCalledWith(reference.current)
-    expect(unobserveMock).not.toHaveBeenCalled()
+    const { unmount } = renderHook(() =>
+      useIntersectionObserver(reference),
+    )
+
+    // Created observer
+    expect(lastObserver).not.toBeNull()
+    expect(lastObserver!.observe).toHaveBeenCalledWith(reference.current)
 
     unmount()
-    expect(unobserveMock).toHaveBeenCalledWith(reference.current)
+
+    expect(lastObserver!.unobserve).toHaveBeenCalledWith(reference.current)
+    expect(lastObserver!.disconnect).toHaveBeenCalled()
   })
 
   it('should handle ref being null', () => {
-    const { observeMock, unobserveMock } = mockIntersectionObserver()
-
     const reference = { current: null } as unknown as RefObject<HTMLElement>
-    const { unmount } = renderHook(() => useIntersectionObserver(reference))
 
-    expect(observeMock).not.toHaveBeenCalled()
-    expect(unobserveMock).not.toHaveBeenCalled()
+    const { unmount } = renderHook(() =>
+      useIntersectionObserver(reference),
+    )
+
+    // When ref is null, IntersectionObserver is never created
+    expect(lastObserver).toBeNull()
 
     unmount()
-    expect(unobserveMock).not.toHaveBeenCalled()
+    // Nothing was called
   })
 
   it('should update isIntersecting when the observer triggers', () => {
-    const { observeMock } = mockIntersectionObserver()
-
     const reference = { current: document.createElement('div') }
-    let callback: IntersectionObserverCallback = () => {};
-    (globalThis.IntersectionObserver as ReturnType<typeof vi.fn>).mockImplementation(
-      (callback_: IntersectionObserverCallback) => {
-        callback = callback_
-        return {
-          observe: observeMock,
-          unobserve: vi.fn(),
-          disconnect: vi.fn(),
-        }
-      },
+
+    const { result } = renderHook(() =>
+      useIntersectionObserver(reference),
     )
 
-    const { result } = renderHook(() => useIntersectionObserver(reference))
+    expect(lastCallback).not.toBeNull()
 
+    // Trigger entering the viewport
     act(() => {
-      callback(
-        [{ isIntersecting: true }] as IntersectionObserverEntry[],
-        {} as IntersectionObserver,
+      lastCallback!(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        lastObserver as unknown as IntersectionObserver,
       )
     })
     expect(result.current).toBe(true)
 
+    // Trigger leaving the viewport
     act(() => {
-      callback(
-        [{ isIntersecting: false }] as IntersectionObserverEntry[],
-        {} as IntersectionObserver,
+      lastCallback!(
+        [{ isIntersecting: false } as IntersectionObserverEntry],
+        lastObserver as unknown as IntersectionObserver,
       )
     })
     expect(result.current).toBe(false)
   })
 
   it('should pass options to IntersectionObserver', () => {
-    const options = { threshold: 0.5 }
-    const { observeMock } = mockIntersectionObserver()
-
+    const options: IntersectionObserverInit = { threshold: 0.5 }
     const reference = { current: document.createElement('div') }
+
     renderHook(() => useIntersectionObserver(reference, options))
 
-    expect(globalThis.IntersectionObserver).toHaveBeenCalledWith(
-      expect.any(Function),
-      options,
-    )
-    expect(observeMock).toHaveBeenCalledWith(reference.current)
+    // Directly assert with the options we recorded, simpler than spying on the constructor
+    expect(lastOptions).toEqual(options)
+    expect(lastObserver).not.toBeNull()
+    expect(lastObserver!.observe).toHaveBeenCalledWith(reference.current)
   })
 })

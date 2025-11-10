@@ -1,6 +1,6 @@
-import { useArray } from '@/hooks/state'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useArray } from '@/hooks/state'
 
 describe('useArray', () => {
   it('should manage an array state', () => {

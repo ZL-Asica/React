@@ -1,5 +1,5 @@
-import { useHideOnScrollDown } from '@/hooks/dom'
 import { act, renderHook } from '@testing-library/react'
+import { useHideOnScrollDown } from '@/hooks/dom'
 
 describe('useHideOnScrollDown', () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { useEventListener } from '@/hooks/dom'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useEventListener } from '@/hooks/dom'
 
 describe('useEventListener', () => {
   it('should attach and detach event listeners', () => {

@@ -1,6 +1,6 @@
-import { useTheme } from '@/hooks/state'
 import { act, renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, vi } from 'vitest'
+import { useTheme } from '@/hooks/state'
 
 const THEME_STORAGE_KEY = 'testing-color-theme'
 

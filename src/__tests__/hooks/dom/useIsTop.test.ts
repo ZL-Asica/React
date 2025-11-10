@@ -1,6 +1,6 @@
-import { useIsTop } from '@/hooks/dom'
-
 import { act, renderHook } from '@testing-library/react'
+
+import { useIsTop } from '@/hooks/dom'
 
 describe('useIsTop', () => {
   beforeEach(() => {

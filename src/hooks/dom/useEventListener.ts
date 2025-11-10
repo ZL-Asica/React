@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
-import { useDebouncedCallback } from '@/hooks/state'
-
 import { useEffect, useRef } from 'react'
+
+import { useDebouncedCallback } from '@/hooks/state'
 
 import { useAdaptiveEffect } from './useAdaptiveEffect'
 
@@ -74,7 +74,7 @@ export const useEventListener = <
       | HTMLElementEventMap[KH]
       | SVGElementEventMap[KH]
       | MediaQueryListEventMap[KM]
-      | Event
+      | Event,
   ) => void,
   element?: RefObject<T>,
   options?: boolean | AddEventListenerOptions,
