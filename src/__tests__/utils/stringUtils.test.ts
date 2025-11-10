@@ -7,7 +7,7 @@ import {
   toSnakeCase,
   truncate,
   truncateToNearestWord,
-} from '@/utils/stringUtils'
+} from '@/utils/string'
 
 describe('string Utils', () => {
   describe('capitalize', () => {

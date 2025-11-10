@@ -1,9 +1,18 @@
 {
   "entryPoints": [
+    // Hooks
+    // "src/hooks",
     "src/hooks/async",
     "src/hooks/dom",
     "src/hooks/state",
-    "src/utils"
+    // Utils
+    // "src/utils",
+    "src/utils/array",
+    "src/utils/date",
+    "src/utils/dom",
+    "src/utils/math",
+    "src/utils/object",
+    "src/utils/string"
   ],
   "out": "docs/docs", // Output directory
   "plugin": ["typedoc-plugin-markdown"], // Use the markdown plugin

@@ -4,7 +4,7 @@ import {
   mapRange,
   randomFloat,
   randomInt,
-} from '@/utils/mathUtils'
+} from '@/utils/math'
 
 describe('math Utils', () => {
   describe('randomInt', () => {

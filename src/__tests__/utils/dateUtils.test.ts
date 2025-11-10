@@ -3,7 +3,7 @@ import {
   getDayOfWeek,
   getRelativeDay,
   isSameDay,
-} from '@/utils/dateUtils'
+} from '@/utils/date'
 
 describe('formatDate', () => {
   it('should format the date correctly', () => {

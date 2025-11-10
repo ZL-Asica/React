@@ -1,5 +1,11 @@
 # @zl-asica/react
 
+## 0.8.0
+
+### Minor Changes
+
+- Move utils out to seperate folders
+
 ## 0.7.4
 
 ### Patch Changes

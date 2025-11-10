@@ -1,4 +1,4 @@
-import { assignUUID, chunkArray, isAllZeroArray, uniqueArray } from '@/utils/arrayUtils'
+import { assignUUID, chunkArray, isAllZeroArray, uniqueArray } from '@/utils/array'
 
 describe('chunkArray', () => {
   it('should divide the array into chunks of the specified size', () => {

@@ -18,9 +18,9 @@
  * // → [ { id: '1', name: 'John' }, { id: '2', name: 'Jane' } ]
  * ```
  */
-export * from './arrayUtils'
-export * from './dateUtils'
-export * from './domUtils'
-export * from './mathUtils'
-export * from './objectUtils'
-export * from './stringUtils'
+export * from './array'
+export * from './date'
+export * from './dom'
+export * from './math'
+export * from './object'
+export * from './string'

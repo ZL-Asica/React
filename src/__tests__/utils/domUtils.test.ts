@@ -3,7 +3,7 @@ import {
   copyToClipboard,
   getScrollPosition,
   pasteFromClipboard,
-} from '@/utils/domUtils'
+} from '@/utils/dom'
 
 describe('getScrollPosition', () => {
   it('should return the current scroll position using window.scrollX and window.scrollY', () => {

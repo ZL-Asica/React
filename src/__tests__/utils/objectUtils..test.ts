@@ -5,7 +5,7 @@ import {
   mergeObjects,
   omit,
   pick,
-} from '@/utils/objectUtils'
+} from '@/utils/object'
 
 describe('object Utilities', () => {
   it('deepClone should clone deeply nested objects', () => {
