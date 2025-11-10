@@ -22,6 +22,7 @@
  */
 
 export { useAsync } from './useAsync'
+export { useAsyncEffect } from './useAsyncEffect'
 export { useAsyncPolling } from './useAsyncPolling'
 export { useFetch } from './useFetch'
 export { usePolling } from './usePolling'
