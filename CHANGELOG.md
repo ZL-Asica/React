@@ -1,5 +1,14 @@
 # @zl-asica/react
 
+## 0.9.0
+
+### Patch Changes
+
+- Add `useAsyncPolling` and `useAsyncEffect`
+  - Added `useAsyncEffect` hook for handling asynchronous side effects in React components.
+  - Added `useAsyncPolling` hook to support better polling mechanisms for async operations.
+  - Improved existing async hooks for enhanced performance (especially for React Compiler compatibility) and usability.
+
 ## 0.8.0
 
 ### Minor Changes
@@ -23,7 +32,6 @@
 ### Patch Changes
 
 - Fix multiple documentation issues
-
   - Fix `Variables` and `Types` documentation
   - Fix module level documentation
   - Add auto-release dist files to github release
@@ -39,7 +47,6 @@
 ### Minor Changes
 
 - Separate export for server and client side
-
   - Before this, only can import from the root of `@zl-asica/react` package.
   - Now, you can import from `@zl-asica/react/utils` and `@zl-asica/react/hooks` for server and client side utils and hooks respectively.
   - This change is to improve the developer experience and make it easier to find the right utils and hooks for the right environment.
@@ -49,7 +56,6 @@
 ### Minor Changes
 
 - Add assignUUID function for react for list key
-
   - This function generates a unique identifier for each item in a array, ensuring that each item has a distinct key when rendering lists in React. This is particularly useful for optimizing rendering performance and preventing issues with React's reconciliation process.
   - When calling from client side, it will use `crypto.randomUUID()` to generate a unique identifier.
   - When calling from server side, it will use a function based on `Math.random()` to generate a unique identifier.
@@ -59,7 +65,6 @@
 ### Minor Changes
 
 - Add useObfuscatedEmail state hook for email obfuscates
-
   - This is a React hook that obfuscates an email address to prevent spam bots from scraping it.
 
 ## 0.4.1
@@ -67,7 +72,6 @@
 ### Patch Changes
 
 - Bug fix for useTheme in Nextjs
-
   - In Next.js, the globalthis may be tried to be accessed before client side fully loaded, which will cause an error.
 
 ## 0.4.0
@@ -75,7 +79,6 @@
 ### Minor Changes
 
 - Add useTheme() hook for dark mode
-
   - Detects system preference (`prefers-color-scheme: dark`).
   - Saves the user's selection in `localStorage` with an expiration time.
   - If the stored theme is older than `expirationDays`, it resets to system default (and localStorage is cleared).
@@ -106,7 +109,6 @@
 ### Patch Changes
 
 - Remove unsless throw Error & add isAllZeroArray()
-
   - `src/utils/stringUtils.ts`: Removed throw Error in `truncateToNearestWord` when user input illegal value (return raw data instead).
   - `src/utils/arrayUtils.ts`: Added `isAllZeroArray` function to check if all elements in an array are zero.
   - Remove some unclear JSDoc comments.
@@ -191,7 +193,6 @@
 ### Patch Changes
 
 - Update all dom hooks with debounce and extend
-
   - Update all dom hooks with debounce
   - Extend dom hooks not only for window but also for document and element
   - Merge `useScrollProgress` into `useScrollPosition`
@@ -220,7 +221,6 @@
 ### Minor Changes
 
 - First Version ready for Production
-
   - **Build & Packaging**: Fixed the incomplete build process, ensuring all exports and types are properly included.
   - **Production Readiness**: This is the first usable version of `@zl-asica/react`.
   - Ready for use in modern React (support 19RC) and Next.js (support 15) projects.
@@ -236,7 +236,6 @@
 ### Patch Changes
 
 - Update JSDoc, add new functions.
-
   - Hooks:
     - useInViewport: Hook to check if an element is in the viewport (could provide a offset).
     - useIsBottom: Hook to check if an element is at the bottom of the viewport (could provide a offset).
