@@ -1,5 +1,15 @@
 # @zl-asica/react
 
+## 0.13.0
+
+### Minor Changes
+
+- update Documentation site styles and settings
+  - Unify styles across all ZL Asica's documentation sites for all packages or tools.
+  - Only enable auto generate sidebar for documentations.
+  - Add `robots.txt` file to improve SEO for documentation site.
+  - Enable `sitemap` in Vitepress setting.
+
 ## 0.12.0
 
 ### Minor Changes
