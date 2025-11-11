@@ -1,5 +1,4 @@
 import { act, renderHook } from '@testing-library/react'
-
 import { useDebouncedCallback } from '@/hooks/state'
 
 describe('useDebouncedCallback', () => {
@@ -9,13 +8,14 @@ describe('useDebouncedCallback', () => {
 
   afterEach(() => {
     vi.useRealTimers()
+    vi.restoreAllMocks()
   })
 
-  it('should debounce the callback execution', () => {
+  it('debounces the callback execution (last call wins)', () => {
     const mockCallback = vi.fn()
 
     const { result } = renderHook(() =>
-      useDebouncedCallback(mockCallback, 300),
+      useDebouncedCallback<[string]>(mockCallback, 300),
     )
 
     act(() => {
@@ -36,7 +36,7 @@ describe('useDebouncedCallback', () => {
     expect(mockCallback).toHaveBeenCalledWith('test3') // Last call wins
   })
 
-  it('should handle multiple arguments', () => {
+  it('handles multiple arguments', () => {
     const mockCallback = vi.fn((a: string, b: number) => `${a}-${b}`)
 
     const { result } = renderHook(() =>
@@ -55,7 +55,31 @@ describe('useDebouncedCallback', () => {
     expect(mockCallback).toHaveBeenCalledWith('example', 42)
   })
 
-  it('should update the callback when dependencies change', () => {
+  it('uses the default delay when not provided', () => {
+    const mockCallback = vi.fn()
+
+    const { result } = renderHook(() =>
+      useDebouncedCallback<[string]>(mockCallback),
+    )
+
+    act(() => {
+      result.current('default-delay')
+    })
+
+    // Default delay is 200ms, so at 199ms it should not fire yet
+    act(() => {
+      vi.advanceTimersByTime(199)
+    })
+    expect(mockCallback).not.toHaveBeenCalled()
+
+    act(() => {
+      vi.advanceTimersByTime(1)
+    })
+    expect(mockCallback).toHaveBeenCalledTimes(1)
+    expect(mockCallback).toHaveBeenCalledWith('default-delay')
+  })
+
+  it('updates the callback when it changes', () => {
     const mockCallback1 = vi.fn()
     const mockCallback2 = vi.fn()
 
@@ -66,6 +90,7 @@ describe('useDebouncedCallback', () => {
       },
     )
 
+    // First callback
     act(() => {
       result.current('test1')
     })
@@ -74,9 +99,11 @@ describe('useDebouncedCallback', () => {
       vi.advanceTimersByTime(300)
     })
 
+    expect(mockCallback1).toHaveBeenCalledTimes(1)
     expect(mockCallback1).toHaveBeenCalledWith('test1')
     expect(mockCallback2).not.toHaveBeenCalled()
 
+    // Update callback function
     rerender({ callback: mockCallback2, delay: 300 })
 
     act(() => {
@@ -87,21 +114,23 @@ describe('useDebouncedCallback', () => {
       vi.advanceTimersByTime(300)
     })
 
+    expect(mockCallback2).toHaveBeenCalledTimes(1)
     expect(mockCallback2).toHaveBeenCalledWith('test2')
     expect(mockCallback1).not.toHaveBeenCalledWith('test2')
   })
 
-  it('should clear the timeout on unmount', () => {
+  it('clears the timeout on unmount (pending call does not fire)', () => {
     const mockCallback = vi.fn()
 
     const { result, unmount } = renderHook(() =>
-      useDebouncedCallback(mockCallback, 300),
+      useDebouncedCallback<[string]>(mockCallback, 300),
     )
 
     act(() => {
       result.current('test')
     })
 
+    // Unmount before the delay elapses
     unmount()
 
     act(() => {

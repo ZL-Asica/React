@@ -1,60 +1,36 @@
 import { useEffect, useState } from 'react'
 
 /**
- * useDebounce
+ * A React hook that debounces a value.
  *
- * A custom React hook to debounce a value or multiple values. It delays updating the state until
- * after a specified period of inactivity. Useful for improving performance in scenarios like
- * search input handling or API calls.
+ * It delays updating the returned value until after the specified delay
+ * has elapsed since the last time the input `value` changed.
  *
- * @param {T} value - The value to debounce. Can be any type (e.g., primitive, object, array, function).
- * @param {number} [delay] - The debounce delay in milliseconds. Defaults to 200ms.
- * @returns {T} The debounced value, which updates after the specified delay.
+ * Commonly used for search inputs, filters, or any value that should
+ * not update on every keystroke but only after the user pauses typing.
+ *
+ * @param {T} value - The value to debounce. Can be any type.
+ * @param {number} [delay] - The debounce delay in milliseconds.
+ * @returns {T} The debounced value.
  *
  * @example
  * ```tsx
- * import { useState } from 'react';
- * import { useDebounce } from '@zl-asica/react';
+ * import { useState, useEffect } from 'react';
+ * import { useDebounce } from '@zl-asica/react/hooks';
  *
- * const MyComponent = () => {
- *   const [text, setText] = useState('');
- *   const debouncedText = useDebounce(text, 300);
+ * const Search = () => {
+ *   const [query, setQuery] = useState('');
+ *   const debouncedQuery = useDebounce(query, 300);
  *
  *   useEffect(() => {
- *     if (debouncedText) {
- *       console.log('Debounced text:', debouncedText);
- *     }
- *   }, [debouncedText]);
+ *     if (!debouncedQuery) return;
+ *     // Fire the search request with `debouncedQuery`
+ *   }, [debouncedQuery]);
  *
  *   return (
  *     <input
- *       type="text"
- *       value={text}
- *       onChange={(e) => setText(e.target.value)}
- *       placeholder="Type something..."
- *     />
- *   );
- * };
- * ```
- * @example
- * ```tsx
- * import { useCallback } from 'react';
- * import { useDebounce } from './useDebounce';
- *
- * const MyComponent = () => {
- *   const handleSearch = (query: string) => {
- *     console.log('Search query:', query);
- *   };
- *
- *   const debouncedSearch = useDebounce(
- *     useCallback((query: string) => handleSearch(query), [handleSearch]),
- *     300
- *   );
- *
- *   return (
- *     <input
- *       type="text"
- *       onChange={(e) => debouncedSearch(e.target.value)}
+ *       value={query}
+ *       onChange={(e) => setQuery(e.target.value)}
  *       placeholder="Search..."
  *     />
  *   );
@@ -65,12 +41,12 @@ export const useDebounce = <T>(value: T, delay: number = 200): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const timeoutId: ReturnType<typeof setTimeout> = setTimeout(() => {
       setDebouncedValue(value)
     }, delay)
 
     return () => {
-      clearTimeout(handler)
+      clearTimeout(timeoutId)
     }
   }, [value, delay])
 
