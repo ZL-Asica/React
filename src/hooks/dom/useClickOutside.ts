@@ -3,33 +3,50 @@ import type { RefObject } from 'react'
 import { useEventListener } from './useEventListener'
 
 /**
- * A custom React hook that detects clicks or touch events outside the specified target element.
- * It is useful for closing dropdowns, modals, or menus when a user interacts outside the specified element.
- * The handler function is called when the user clicks or touches outside the referenced element.
- * Optionally, events can be debounced for better performance in rapid interaction scenarios.
+ * A React hook that invokes a handler when the user clicks or touches
+ * **outside** of the given element.
  *
- * @param {RefObject<HTMLElement | null>} reference - The reference to the target element. The hook detects interactions outside this element.
- * @param {() => void} handler - The callback function to execute when a click or touch is detected outside the element.
- * @param {number} [debounce=0] - The debounce delay in milliseconds for the event listener. Defaults to `0` (no debounce).
+ * This is especially useful for:
+ * - Closing dropdowns or select menus when the user clicks elsewhere.
+ * - Dismissing modals, popovers, or sidebars.
+ * - Hiding context menus or tooltips when the user interacts outside.
+ *
+ * Internally, this hook:
+ * - Listens to global `'mousedown'` and `'touchstart'` events.
+ * - Ignores events that originate from inside the referenced element.
+ * - Calls the provided `handler` once for each qualifying outside interaction.
+ * - Supports optional debouncing via {@link useEventListener}.
+ *
+ * @param {RefObject<HTMLElement | null>} reference
+ *   Ref to the target element. Any interaction that happens **outside** this
+ *   element will trigger the handler. If `reference.current` is `null`, the
+ *   hook does nothing until the element is mounted.
+ *
+ * @param {() => void} handler
+ *   Callback to run when an outside click or touch is detected.
+ *   Typical usage is to close or hide UI, e.g. `setOpen(false)`.
+ *
+ * @param {number} [debounce]
+ *   Debounce delay in milliseconds applied to the underlying event listener.
+ *   - `0` or `undefined` means no debouncing.
+ *   - A positive value (e.g. `200`) will delay the handler until the user
+ *     stops interacting for at least that many milliseconds.
  *
  * @example
- * Example: Close a dropdown menu when clicking outside
+ * // Close a dropdown when clicking outside
  * ```tsx
- * import { useRef, useState } from 'react';
- * import { useClickOutside } from '@zl-asica/react';
+ * const Dropdown = () => {
+ *   const [open, setOpen] = useState(false);
+ *   const ref = useRef<HTMLDivElement | null>(null);
  *
- * const MyComponent = () => {
- *   const [isOpen, setIsOpen] = useState(false);
- *   const ref = useRef<HTMLDivElement>(null);
- *
- *   useClickOutside(ref, () => setIsOpen(false));
+ *   useClickOutside(ref, () => setOpen(false));
  *
  *   return (
  *     <div>
- *       <button onClick={() => setIsOpen(true)}>Open Menu</button>
- *       {isOpen && (
- *         <div ref={ref} style={{ border: '1px solid black', padding: '10px' }}>
- *           This is a dropdown menu. Click outside to close.
+ *       <button onClick={() => setOpen((prev) => !prev)}>Toggle</button>
+ *       {open && (
+ *         <div ref={ref}>
+ *           Dropdown content
  *         </div>
  *       )}
  *     </div>
@@ -38,59 +55,50 @@ import { useEventListener } from './useEventListener'
  * ```
  *
  * @example
- * Example: Close a modal when touching outside
+ * // Close a modal with a small debounce to avoid rapid flicker
  * ```tsx
- * import { useRef, useState } from 'react';
- * import { useClickOutside } from '@zl-asica/react';
+ * const Modal = () => {
+ *   const [open, setOpen] = useState(true);
+ *   const modalRef = useRef<HTMLDivElement | null>(null);
  *
- * const MyComponent = () => {
- *   const [isModalOpen, setIsModalOpen] = useState(false);
- *   const modalRef = useRef<HTMLDivElement>(null);
+ *   useClickOutside(modalRef, () => setOpen(false), 150);
  *
- *   useClickOutside(modalRef, () => setIsModalOpen(false), 200); // Debounced by 200ms
+ *   if (!open) return null;
  *
  *   return (
- *     <>
- *       <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
- *       {isModalOpen && (
- *         <div
- *           ref={modalRef}
- *           style={{
- *             position: 'fixed',
- *             top: '50%',
- *             left: '50%',
- *             transform: 'translate(-50%, -50%)',
- *             padding: '20px',
- *             background: 'white',
- *             borderRadius: '10px',
- *             boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
- *           }}
- *         >
- *           <p>This is a modal. Tap outside to close.</p>
- *         </div>
- *       )}
- *     </>
+ *     <div className="backdrop">
+ *       <div ref={modalRef} className="modal">
+ *         Modal content
+ *       </div>
+ *     </div>
  *   );
  * };
  * ```
  */
-
 export const useClickOutside = (
   reference: RefObject<HTMLElement | null>,
   handler: () => void,
   debounce: number = 0,
 ): void => {
   const listener = (event: Event): void => {
-    if (
-      !reference.current
-      || reference.current.contains(event.target as Node)
-    ) {
+    const element = reference.current
+
+    // If there is no element mounted yet, do nothing.
+    if (!element) {
       return
     }
+
+    const target = event.target as Node | null
+
+    // Ignore events that originate from inside the element.
+    if (target && element.contains(target)) {
+      return
+    }
+
     handler()
   }
 
-  // Use our custom event listener hook with generic type
+  // Attach global listeners on the window for pointer-like events
   useEventListener('mousedown', listener, undefined, undefined, debounce)
   useEventListener('touchstart', listener, undefined, undefined, debounce)
 }
