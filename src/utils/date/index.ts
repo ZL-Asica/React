@@ -17,6 +17,7 @@
  */
 
 export { formatDate } from './formatDate'
+export { formatDistanceToNow } from './formatDistanceToNow'
 export { getDayOfWeek } from './getDayOfWeek'
 export { getRelativeDay } from './getRelativeDay'
 export { isSameDay } from './isSameDay'
