@@ -1,10 +1,19 @@
 # @zl-asica/react
 
+## 0.10.0
+
+### Minor Changes
+
+- This release mainly updating and enhancing `hooks/dom` related hooks.
+  - Add `useOnlineStatus` hook to detect online/offline status of the browser.
+  - Add `useScript` hook to dynamically load external scripts.
+  - Improved existing dom hooks for enhanced performance, usability, and testing.
+
 ## 0.9.0
 
-### Patch Changes
+### Minor Changes
 
-- Add `useAsyncPolling` and `useAsyncEffect`
+- This release mainly updating and enhancing `hooks/async` related hooks.
   - Added `useAsyncEffect` hook for handling asynchronous side effects in React components.
   - Added `useAsyncPolling` hook to support better polling mechanisms for async operations.
   - Improved existing async hooks for enhanced performance (especially for React Compiler compatibility) and usability.
