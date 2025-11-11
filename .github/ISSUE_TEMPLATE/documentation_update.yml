@@ -1,0 +1,97 @@
+name: 📚 Documentation Update
+description: Report an issue or propose an improvement to the @zl-asica/react docs
+title: '[Docs]: '
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Thanks for helping improve the **@zl-asica/react** documentation! ✨
+        Clear, accurate docs make it much easier for everyone to integrate with Airtable safely and confidently.
+
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: 🧩 Type of documentation change
+      description: What best describes this request?
+      options:
+        - Fix typo / formatting
+        - Clarify existing content
+        - Correct inaccurate or outdated information
+        - Add missing section or example
+        - Reorganize / restructure existing content
+        - Improve API reference (types, params, return values)
+        - Other (please explain below)
+    validations:
+      required: true
+
+  - type: input
+    id: pages_affected
+    attributes:
+      label: 📄 Page(s) affected
+      description: >
+        Link to the page(s) or list their paths (e.g., `/guide/getting-started`, `/docs/hooks/async/useAsync`).
+      placeholder: 'Example: /docs/hooks/async/useAsync'
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_text
+    attributes:
+      label: 🔍 What’s the current issue?
+      description: >
+        Describe what is wrong or missing today.
+        If helpful, paste the relevant excerpt (short snippets only).
+      placeholder: >
+        Example: The "Quick start" snippet still uses the old import path and fails with @zl-asica/react@0.1.0...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: ✏️ Proposed change or wording
+      description: >
+        Suggest new text, structure, or examples.
+        Rough drafts are welcome — maintainers can refine the language.
+      placeholder: >
+        Example: Update the snippet to use `import { AirtableClient } from '@zl-asica/react'` and show a minimal records.listRecords call.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: ⚖️ Severity
+      description: How serious is this documentation issue for real use?
+      options:
+        - Cosmetic (typos, small formatting issues)
+        - Minor (slightly confusing, but unlikely to cause bugs)
+        - Moderate (confusing or incomplete, could cause mistakes)
+        - High (technically incorrect, likely to mislead or break code)
+        - Critical (examples do not work at all / completely wrong guidance)
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 🧪 Context (optional)
+      description: >
+        Any relevant environment or version details that help interpret this change.
+      placeholder: >
+        Example: @zl-asica/react@0.1.0, Node 20.11, using the hooks in a Next.js project...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: ✔ Checklist
+      options:
+        - label: I have checked existing issues and docs to avoid duplicates.
+          required: true
+        - label: I confirm this request is specifically about documentation (not a code bug or new feature request).
+          required: true
+        - label: I am open to submitting a follow-up PR if maintainers provide guidance.
+          required: false
