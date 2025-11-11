@@ -1,7 +1,7 @@
 {
   "name": "@zl-asica/react",
   "type": "module",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "packageManager": "pnpm@10.21.0",
   "description": "A library of reusable React hooks, components, and utilities built by ZL Asica.",
   "author": {

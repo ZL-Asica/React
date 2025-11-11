@@ -1,5 +1,19 @@
 # @zl-asica/react
 
+## 0.12.0
+
+### Minor Changes
+
+- Add multiple string utils
+  - All string test cases split into `string` folder.
+  - Add `escapeRegExp` util to escape special characters in a string for use in a regular expression.
+  - Add `isBlank` util to check if a string is blank (empty or only whitespace).
+  - Add `normalizeWhitespace` util to normalize whitespace in a string (replace multiple spaces with a single space and trim).
+  - Add `slugify` util to convert a string into a URL-friendly slug.
+  - Add `splitWords` util to split a string into an array of words.
+  - Add `toTitleCase` util to convert a string to title case.
+  - Add `truncateMiddle` util to truncate a string in the middle with an ellipsis
+
 ## 0.11.0
 
 ### Minor Changes
