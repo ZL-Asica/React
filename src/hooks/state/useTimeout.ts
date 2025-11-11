@@ -21,7 +21,7 @@ import { useEffect, useRef } from 'react'
  * ```
  */
 export const useTimeout = (callback: (() => void) | void, delay: number = 0): void => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (delay <= 0) {
