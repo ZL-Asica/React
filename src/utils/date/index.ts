@@ -16,8 +16,15 @@
  * ```
  */
 
+export { addDays, subDays } from './addSubDays'
+export { differenceInCalendarDays } from './differenceInCalendarDays'
 export { formatDate } from './formatDate'
 export { formatDistanceToNow } from './formatDistanceToNow'
+export { formatDuration } from './formatDuration'
+export type { DurationUnit, FormatDurationLabels, FormatDurationOptions } from './formatDuration'
 export { getDayOfWeek } from './getDayOfWeek'
 export { getRelativeDay } from './getRelativeDay'
 export { isSameDay } from './isSameDay'
+export { isWeekend } from './isWeekend'
+export { isWithinRange } from './isWithinRange'
+export { endOfDay, startOfDay } from './startEndOfDay'
