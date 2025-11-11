@@ -1,1 +1,0 @@
-import{_ as t,c as s,o as i,ah as a}from"./chunks/framework.DSkQMUan.js";const g=JSON.parse('{"title":"SSR","description":"","frontmatter":{},"headers":[],"relativePath":"guide/ssr.md","filePath":"guide/ssr.md"}'),r={name:"guide/ssr.md"};function o(n,e,l,d,h,c){return i(),s("div",null,[...e[0]||(e[0]=[a("",24)])])}const u=t(r,[["render",o]]);export{g as __pageData,u as default};
