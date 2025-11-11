@@ -1,5 +1,21 @@
 # @zl-asica/react
 
+## 0.11.0
+
+### Minor Changes
+
+- Add multiple date utils
+  - Add `addDays`, `subDays` for adding and subtracting days from a date.
+  - Add `differenceInCalendarDays` to calculate the difference in calendar days between two dates.
+  - Add `formatDate` to check if two dates fall on the same day.
+  - Add `formatDistanceToNow` to format the distance between a given date and now.
+  - Add `formatDuration` to format a duration object into a human-readable string.
+  - Add `getRelativeDay` to get a date relative to today (e.g., yesterday, tomorrow).
+  - Add `isWeekend` to check if a given date falls on a weekend.
+  - Add `isWithinRange` to check if a date falls within a specified range.
+  - Add `startEndOfDay` to get the start and end timestamps of a given
+  - Update several existing date utils for better performance and usability.
+
 ## 0.10.0
 
 ### Minor Changes
