@@ -82,12 +82,14 @@ export const useInViewport = (
   debounce: number = 100,
 ): boolean => {
   const [isVisible, setIsVisible] = useState(() =>
+    /* v8 ignore next 3 -- @preserve */
     typeof window === 'undefined'
       ? false
       : computeVisibility(reference.current, offset),
   )
 
   const handleChange = (): void => {
+    /* v8 ignore if -- @preserve */
     if (typeof window === 'undefined') {
       return
     }
