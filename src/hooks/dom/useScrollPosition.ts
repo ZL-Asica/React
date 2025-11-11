@@ -100,6 +100,7 @@ export const useScrollPosition = (
   initialValue: number = 0,
 ): number => {
   const [scrollPosition, setScrollPosition] = useState(() =>
+    /* v8 ignore next @preserve */
     typeof window === 'undefined' || typeof document === 'undefined'
       ? initialValue
       : computeScrollPosition(element, percentage),
