@@ -1,13 +1,20 @@
 import { useEffect, useLayoutEffect } from 'react'
 
 /**
+ * Resolve which effect hook should be used based on whether a DOM
+ * environment is available.
+ *
+ * @internal
+ */
+export const __INTERNAL__resolveAdaptiveEffect = (
+  hasDOM: boolean,
+): typeof useEffect => (hasDOM ? useLayoutEffect : useEffect)
+
+/**
  * A hook that adapts to the environment: uses `useLayoutEffect` on the client side
- * and `useEffect` on the server side. This ensures compatibility with both SSR
- * and CSR environments.
+ * (when a DOM is available) and `useEffect` on the server side. This helps avoid
+ * React warnings such as "useLayoutEffect does nothing on the server".
  *
- * Inspired by the implementation from usehooks-ts.
- *
- * @see {@link https://github.com/juliencrn/usehooks-ts} Original implementation
  * @see {@link https://react.dev/reference/react/useEffect} React useEffect documentation
  * @see {@link https://react.dev/reference/react/useLayoutEffect} React useLayoutEffect documentation
  *
@@ -15,9 +22,12 @@ import { useEffect, useLayoutEffect } from 'react'
  * Just like `useEffect`, but it chooses the right hook depending on the environment.
  * ```tsx
  * useAdaptiveEffect(() => {
- *  // Your effect code here
+ *   // Your effect code here
  * }, [dependencies]);
  * ```
  */
 export const useAdaptiveEffect: typeof useEffect
-  = typeof globalThis === 'undefined' ? useEffect : useLayoutEffect
+  = __INTERNAL__resolveAdaptiveEffect(
+    // "Has DOM" check: window + document must both exist
+    typeof window !== 'undefined' && typeof document !== 'undefined',
+  )

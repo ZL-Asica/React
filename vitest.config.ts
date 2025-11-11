@@ -16,7 +16,6 @@ export default defineConfig({
       exclude: [
         'src/__tests__',
         '**/index.ts',
-        'src/hooks/dom/useAdaptiveEffect.ts',
       ],
     },
     alias: {
