@@ -1,0 +1,260 @@
+/**
+ * Customize default theme styling by overriding CSS variables:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+/**
+ * Colors
+ *
+ * Each colors have exact same color scale system with 3 levels of solid
+ * colors with different brightness, and 1 soft color.
+ *
+ * - `XXX-1`: The most solid color used mainly for colored text. It must
+ *   satisfy the contrast ratio against when used on top of `XXX-soft`.
+ *
+ * - `XXX-2`: The color used mainly for hover state of the button.
+ *
+ * - `XXX-3`: The color for solid background, such as bg color of the button.
+ *   It must satisfy the contrast ratio with pure white (#ffffff) text on
+ *   top of it.
+ *
+ * - `XXX-soft`: The color used for subtle background such as custom container
+ *   or badges. It must satisfy the contrast ratio when putting `XXX-1` colors
+ *   on top of it.
+ *
+ *   The soft color must be semi transparent alpha channel. This is crucial
+ *   because it allows adding multiple "soft" colors on top of each other
+ *   to create an accent, such as when having inline code block inside
+ *   custom containers.
+ *
+ * - `default`: The color used purely for subtle indication without any
+ *   special meanings attached to it such as bg color for menu hover state.
+ *
+ * - `brand`: Used for primary brand colors, such as link text, button with
+ *   brand theme, etc.
+ *
+ * - `tip`: Used to indicate useful information. The default theme uses the
+ *   brand color for this by default.
+ *
+ * - `warning`: Used to indicate warning to the users. Used in custom
+ *   container, badges, etc.
+ *
+ * - `danger`: Used to show error, or dangerous message to the users. Used
+ *   in custom container, badges, etc.
+ * -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/* ZL Asica theme:                                         */
+/* -------------------------------------------------------------------------- */
+@import './zla-layout.css';
+
+:root {
+  /* ==== Brand primary: Iris (indigo-violet) ==== */
+  --zlar-iris: oklch(0.73 0.17 275);
+  --zlar-iris-deep: oklch(0.62 0.18 275);
+  --zlar-iris-soft: oklch(0.93 0.05 275 / 0.5);
+  --zlar-iris-bright: color-mix(in oklab, var(--zlar-iris) 75%, white 25%);
+
+  /* For hover, outline, small tags */
+  --zlar-iris-subtle: oklch(0.9 0.03 275 / 0.45);
+
+  /* ==== Brand accent: Aqua (teal-ish) ==== */
+  --zlar-aqua: oklch(0.78 0.15 210);
+  --zlar-aqua-deep: oklch(0.66 0.16 210);
+  --zlar-aqua-soft: oklch(0.93 0.05 210 / 0.45);
+  --zlar-aqua-bright: color-mix(in oklab, var(--zlar-aqua) 70%, white 30%);
+
+  /* ==== Neutrals / Ink & surfaces ==== */
+  --zlar-ink: oklch(0.19 0.03 260); /* Main text color */
+  --zlar-ink-soft: oklch(0.28 0.02 260); /* Secondary text / meta */
+  --zlar-ink-softer: oklch(0.36 0.02 260);
+
+  --zlar-paper: oklch(0.99 0.01 260); /* Page background */
+  --zlar-paper-soft: oklch(0.97 0.01 260); /* section background */
+  --zlar-paper-elevated: oklch(0.94 0.02 260); /* card background */
+
+  /* Code / subtle borders */
+  --zlar-border-subtle: oklch(0.86 0.03 260);
+  --zlar-code-bg: oklch(0.93 0.03 260);
+
+  /* ==== Semantic colors ==== */
+  --zlar-success: oklch(0.78 0.13 145);
+  --zlar-success-soft: oklch(0.92 0.05 145 / 0.4);
+
+  --zlar-warn: oklch(0.86 0.14 90);
+  --zlar-warn-soft: oklch(0.95 0.06 90 / 0.45);
+
+  --zlar-danger: oklch(0.72 0.19 25);
+  --zlar-danger-soft: oklch(0.93 0.06 25 / 0.45);
+}
+
+:root {
+  /* ---------------------------------------------------------------------- */
+  /* 1. 用原来的变量名定义新的配色（不动下游用法）                               */
+  /* ---------------------------------------------------------------------- */
+
+  /* 原 coral -> 现在的 Iris / Indigo-Violet 品牌色 */
+  --zlar-coral: oklch(0.73 0.17 275);
+  --zlar-coral-deep: oklch(0.62 0.18 275);
+  --zlar-coral-soft: oklch(0.93 0.05 275 / 0.5);
+  --zlar-coral-bright: color-mix(in oklab, var(--zlar-coral) 75%, white 25%);
+
+  /* 原 emerald -> 现在的 Aqua / Teal accent */
+  --zlar-emerald: oklch(0.78 0.15 210);
+  --zlar-emerald-deep: oklch(0.66 0.16 210);
+  --zlar-emerald-soft: oklch(0.93 0.05 210 / 0.45);
+
+  /* Ink / 中性色，供正文和次要文字用 */
+  --zlar-ink: oklch(0.19 0.03 260);
+  --zlar-ink-soft: oklch(0.28 0.02 260);
+  --zlar-ink-softer: oklch(0.36 0.02 260);
+
+  --zlar-paper: oklch(0.99 0.01 260);
+  --zlar-paper-soft: oklch(0.97 0.01 260);
+  --zlar-paper-elevated: oklch(0.94 0.02 260);
+
+  --zlar-border-subtle: oklch(0.86 0.03 260);
+  --zlar-code-bg: oklch(0.93 0.03 260);
+
+  /* 可选：语义色，如果之后你想自己接管 warning / danger 的话 */
+  --zlar-success: oklch(0.78 0.13 145);
+  --zlar-success-soft: oklch(0.92 0.05 145 / 0.4);
+
+  --zlar-warn: oklch(0.86 0.14 90);
+  --zlar-warn-soft: oklch(0.95 0.06 90 / 0.45);
+
+  --zlar-danger: oklch(0.72 0.19 25);
+  --zlar-danger-soft: oklch(0.93 0.06 25 / 0.45);
+}
+
+/* ------------------------------------------------------------------------ */
+/* 2. 你的 VitePress 映射（可以原样保留，只是底层色已经换了）                 */
+/* ------------------------------------------------------------------------ */
+
+:root {
+  /* Map to VitePress base brand */
+  --vp-c-brand: var(--zlar-coral);
+  --vp-c-brand-light: var(--zlar-emerald);
+  --vp-c-brand-dark: var(--zlar-coral-deep);
+  --vp-c-brand-soft: var(--zlar-coral-soft);
+
+  /* Default semantic scales */
+
+  --vp-c-default-1: var(--vp-c-gray-1);
+  --vp-c-default-2: var(--vp-c-gray-2);
+  --vp-c-default-3: var(--vp-c-gray-3);
+  --vp-c-default-soft: var(--vp-c-gray-soft);
+
+  --vp-c-brand-1: var(--zlar-coral-deep);
+  --vp-c-brand-2: var(--zlar-coral);
+  --vp-c-brand-3: var(--zlar-coral-bright);
+  --vp-c-brand-soft: var(--zlar-coral-soft);
+
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-2: var(--vp-c-brand-2);
+  --vp-c-tip-3: var(--vp-c-brand-3);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  --vp-c-warning-1: var(--vp-c-yellow-1);
+  --vp-c-warning-2: var(--vp-c-yellow-2);
+  --vp-c-warning-3: var(--vp-c-yellow-3);
+  --vp-c-warning-soft: var(--vp-c-yellow-soft);
+
+  --vp-c-danger-1: var(--vp-c-red-1);
+  --vp-c-danger-2: var(--vp-c-red-2);
+  --vp-c-danger-3: var(--vp-c-red-3);
+  --vp-c-danger-soft: var(--vp-c-red-soft);
+
+  /* Nav: slight brand tint */
+
+  --vp-nav-bg-color: color-mix(in oklab, var(--vp-c-bg) 82%, var(--vp-c-brand-soft) 18%);
+  --vp-nav-screen-bg-color: color-mix(in oklab, var(--vp-c-bg) 90%, var(--vp-c-brand-soft) 10%);
+
+  .dark {
+    --vp-nav-bg-color: color-mix(in oklab, var(--vp-c-bg) 90%, var(--vp-c-brand-soft) 10%);
+    --vp-nav-screen-bg-color: color-mix(in oklab, var(--vp-c-bg) 94%, var(--vp-c-brand-soft) 6%);
+  }
+
+  /* Button: brand as solid primary */
+
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-bg: var(--vp-c-brand-3);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-c-brand-1);
+
+  /* Home hero */
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, var(--zlar-coral) 0%, var(--zlar-emerald) 100%);
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    var(--zlar-coral-deep) 0%,
+    var(--zlar-emerald-deep) 100%
+  );
+  --vp-home-hero-image-filter: blur(44px);
+
+  /* Custom block: tip uses brand soft */
+
+  --vp-custom-block-tip-border: transparent;
+  --vp-custom-block-tip-text: var(--vp-c-text-1);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
+  --vp-custom-block-tip-code-bg: var(--vp-c-brand-soft);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(68px);
+  }
+}
+
+/* Algolia search brand color */
+
+.DocSearch {
+  --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Home Hero button tweaks                                                    */
+/* -------------------------------------------------------------------------- */
+
+.VPHome .VPButton.brand {
+  background: color-mix(in oklab, var(--vp-c-brand-1) 85%, var(--vp-c-bg) 15%);
+}
+
+.VPHome .VPButton.brand:hover {
+  background: color-mix(in oklab, var(--vp-c-brand-2) 90%, var(--vp-c-bg) 10%);
+  border-color: var(--vp-c-brand-2);
+}
+
+.dark .VPHome .VPButton.brand {
+  background: color-mix(in oklab, var(--vp-c-brand-1) 78%, var(--vp-c-bg) 22%);
+}
+
+.dark .VPHome .VPButton.brand:hover {
+  background: color-mix(in oklab, var(--vp-c-brand-2) 85%, var(--vp-c-bg) 15%);
+  border-color: var(--vp-c-brand-1);
+}
+
+/* Let hero PNG's transparent areas show the background instead of the gradient */
+.VPHome .VPHero .image .image-src {
+  background-color: var(--vp-c-bg-alt);
+  border-radius: 10rem;
+}
+
+/* For dark, keep pure white */
+.dark .VPHome .VPHero .image .image-src {
+  background-color: #ffffff;
+  border-radius: 10rem;
+}

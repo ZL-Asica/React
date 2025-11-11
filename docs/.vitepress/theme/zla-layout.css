@@ -1,0 +1,164 @@
+/* -------------------------------------------------------------------------- */
+/* Sidebar                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.zla-layout .VPSidebar {
+  border-right: 1px solid color-mix(in oklab, var(--vp-c-border) 75%, transparent);
+  background: color-mix(in oklab, var(--vp-c-bg) 96%, var(--vp-c-bg-soft) 4%);
+}
+
+/* Group headings */
+
+.zla-layout .VPSidebar .group .title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 550;
+  color: var(--vp-c-text-3);
+  padding-inline: 0.85rem;
+  margin-top: 0.4rem;
+}
+
+/* Link rows */
+
+.zla-layout .VPSidebarItem .link {
+  border-radius: 999px;
+  padding-inline: 0.75rem;
+  margin-inline: 0.25rem;
+}
+
+.zla-layout .VPSidebarItem .link > a {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.2rem;
+  border-radius: inherit;
+  font-size: 0.86rem;
+  transition:
+    background 0.16s ease-out,
+    color 0.16s ease-out,
+    transform 0.12s ease-out;
+}
+
+/* Hover */
+
+.zla-layout .VPSidebarItem .link > a:hover {
+  background: color-mix(in oklab, var(--vp-c-brand-soft) 55%, transparent);
+  transform: translateX(1px);
+}
+
+/* Active item: animated rail */
+
+.zla-layout .VPSidebarItem.is-active .link > a,
+.zla-layout .VPSidebarItem .link > a.router-link-active {
+  background: color-mix(in oklab, var(--vp-c-brand-soft) 85%, transparent);
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--vp-c-brand-2) 40%, transparent);
+  position: relative;
+}
+
+.zla-layout .VPSidebarItem.is-active .link > a::before,
+.zla-layout .VPSidebarItem .link > a.router-link-active::before {
+  content: '';
+  position: absolute;
+  left: -0.22rem;
+  top: 18%;
+  bottom: 18%;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    var(--vp-c-brand-2),
+    color-mix(in oklab, var(--vp-c-brand-1) 70%, var(--vp-c-brand-3) 30%)
+  );
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.18s ease-out;
+}
+
+.zla-layout .VPSidebarItem.is-active .link > a.router-link-active::before,
+.zla-layout .VPSidebarItem .link > a.router-link-active::before {
+  transform: scaleY(1);
+}
+
+/* Nested items: subtle guide line */
+
+.zla-layout .VPSidebar .items .items {
+  margin-left: 0.7rem;
+  border-left: 1px dashed color-mix(in oklab, var(--vp-c-border) 60%, transparent);
+  padding-left: 0.5rem;
+}
+
+/* Sidebar focus */
+
+.zla-layout .VPSidebarItem .link > a:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--vp-c-brand-2) 80%, transparent);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Doc Outline / TOC                                                          */
+/* -------------------------------------------------------------------------- */
+
+.zla-layout .VPDocAsideOutline {
+  font-size: 0.78rem;
+}
+
+.zla-layout .VPDocAsideOutline .outline-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 550;
+  color: var(--vp-c-text-3);
+  margin-bottom: 0.4rem;
+}
+
+.zla-layout .VPDocAsideOutline .outline-content {
+  border-left: 1px solid color-mix(in oklab, var(--vp-c-border) 70%, transparent);
+  padding-left: 0.75rem;
+  margin-left: 0.1rem;
+}
+
+/* TOC links */
+
+.zla-layout .VPDocAsideOutline a.outline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.16rem 0;
+  text-decoration: none;
+  color: var(--vp-c-text-2);
+  transition:
+    color 0.16s ease-out,
+    transform 0.12s ease-out;
+}
+
+.zla-layout .VPDocAsideOutline a.outline-link:hover {
+  color: var(--vp-c-text-1);
+  transform: translateX(1px);
+}
+
+/* Active heading */
+
+.zla-layout .VPDocAsideOutline a.outline-link.active {
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+}
+
+/* Optional dot marker if present in theme DOM */
+
+.zla-layout .VPDocAsideOutline .outline-marker {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--vp-c-border) 70%, transparent);
+  transition:
+    background 0.16s ease-out,
+    box-shadow 0.16s ease-out;
+}
+
+.zla-layout .VPDocAsideOutline .outline-marker.active {
+  background: var(--vp-c-brand-2);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--vp-c-brand-soft) 75%, transparent);
+}
